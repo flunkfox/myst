@@ -1,10 +1,12 @@
 package main;
 
-public class Driver {
-
+public class Driver
+{
 	public static void main(String[] args) 
 	{
-		System.out.println("What is the big deal,");
-	}
+        // TODO code application logic here
 
+        GoodGraphics g = new GoodGraphics();
+
+    }
 }
