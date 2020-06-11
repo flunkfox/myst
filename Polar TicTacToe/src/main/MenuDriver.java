@@ -395,6 +395,7 @@ class MenuDriver extends JFrame implements ActionListener
         		//check is filled already
         		if(!focus.isFilled())
         		{
+        			focus.setFilled(true);
         			if(game.whosTurn()==1)
                 		focus.setColor(player1color);
                 	else
