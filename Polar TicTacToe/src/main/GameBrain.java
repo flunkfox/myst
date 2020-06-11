@@ -165,15 +165,9 @@ public class GameBrain
 	   		nextrow = row - 1;
     	
 	    int nextcol = col + 1;
-	    if(col==4)
+	    if(col==4 && count == 4)
 	    {
-	        if(count == 4)
                 return true;
-            else if(board[nextrow][nextcol] == player)
-            {
-                count++;
-                return leftDiagonalRecurse(player, nextrow, nextcol, count);
-            }
 	    }
 	    else if(nextcol < 5)
     	{
@@ -198,15 +192,9 @@ public class GameBrain
 	   		nextrow = row + 1;
     	
 	    int nextcol = col + 1;
-	    if(col==4)
+	    if(col==4 && count == 4)
 	    {
-	        if(count == 4)
                 return true;
-            else if(board[nextrow][nextcol] == player)
-            {
-                count++;
-                return rightDiagonalRecurse(player, nextrow, nextcol, count);
-            }
 	    }
 	    else if(nextcol < 5)
     	{

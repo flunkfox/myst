@@ -11,6 +11,7 @@ class MenuDriver extends JFrame implements ActionListener
 	
 	private int psize = 700;
 	private boolean debug = true;
+	private boolean isSingleplayer;
 	private JLabel mouse;
 	private CardLayout card;
 	private JPanel cont;
@@ -20,6 +21,7 @@ class MenuDriver extends JFrame implements ActionListener
 	private JButton multi;
 	private JButton back;
 	private JButton play;
+	private JLabel pl2;
 	
 	private Color player1color = Color.pink;
 	private Color player2color = Color.blue;
@@ -48,8 +50,8 @@ class MenuDriver extends JFrame implements ActionListener
 	
 	cont = new JPanel();
 	cont.setLayout(card);
-	//cont.add("menu", initMenu());
-	//cont.add("submenu", initSubMenu());
+	cont.add("menu", initMenu());
+	cont.add("submenu", initSubMenu());
 	cont.add("game", initGame());
 	
 	add(cont);
@@ -133,7 +135,7 @@ class MenuDriver extends JFrame implements ActionListener
 					pl1.setForeground(Color.WHITE);
 					pl1.setFont(new Font("Rockwell", Font.PLAIN, 27));
 					pl1.setIcon(panel);
-				JLabel pl2 = new JLabel("Player 2");
+				pl2 = new JLabel("COMPUTER");
 					pl2.setHorizontalTextPosition(JLabel.CENTER);
 					pl2.setForeground(Color.WHITE);
 					pl2.setFont(new Font("Rockwell", Font.PLAIN, 27));
@@ -284,13 +286,17 @@ class MenuDriver extends JFrame implements ActionListener
         
         if(j.equals(single))
         {
-        	card.show(cont, "submenu");
         	game.setMode("singleplayer");
+        	isSingleplayer = true;
+        	pl2.setText("COMPUTER");
+        	card.show(cont, "submenu");
         	//System.out.println("singleplayer button");
         }
         if(j.equals(multi))
         {
         	game.setMode("multiplayer");
+        	isSingleplayer = false;
+        	pl2.setText("Player 2");
         	card.show(cont, "submenu");
         	//System.out.println("multiplayer button");
         } 
