@@ -5,6 +5,9 @@ import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.Hashtable;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 class MenuDriver extends JFrame implements ActionListener
 {
 	private GameBrain game;
@@ -12,6 +15,7 @@ class MenuDriver extends JFrame implements ActionListener
 	private int psize = 700;
 	private boolean debug = true;
 	private boolean isSingleplayer;
+	private boolean winMode = false;
 	private JLabel mouse;
 	private CardLayout card;
 	private JPanel cont;
@@ -37,6 +41,8 @@ class MenuDriver extends JFrame implements ActionListener
 	//the game over panel
 	private JPanel GameOver;
 
+
+	
 	public MenuDriver(GameBrain newgame)
 	{
 	game = newgame;
@@ -264,16 +270,16 @@ class MenuDriver extends JFrame implements ActionListener
 
 	public JPanel initGame()
 	{
+		
 		Border emptyBorder = BorderFactory.createEmptyBorder();
-		Game = new JPanel();
+		Game = new JPanel(new FlowLayout(FlowLayout.LEFT,0,0));
 		Game.setBorder(emptyBorder);
         Game.setBackground(Color.white);
 		hud = new JPanel();
-		hud.setBorder(emptyBorder);
         hud.setBackground(Color.pink);
         hud.setPreferredSize(new Dimension(200,psize));
-        Game.add(new Canvas(), BorderLayout.CENTER);
-        Game.add(hud, BorderLayout.EAST);
+        Game.add(new Canvas());
+        Game.add(hud);
         
         return Game;
 	}
@@ -320,6 +326,8 @@ class MenuDriver extends JFrame implements ActionListener
 	class Canvas extends JPanel implements MouseListener
     {
         private Hexashape[][] cube;
+        private boolean s;
+        private boolean displayWinMode;
         
         public Canvas()
         {            
@@ -344,29 +352,63 @@ class MenuDriver extends JFrame implements ActionListener
             g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
             g2d.setStroke(new BasicStroke(3));
             
-            //draw hexa-shape
-            for(int i = 0; i<6; i++)
+            //checks if win mode has been activated
+            //this is the special mode that makes the screen flash if you win or lose
+            if(displayWinMode == true)
             {
-            	for(int k = 0; k<5; k++)
-            	{
-            		if(cube[i][k].isFilled())
-            		{
-            			g2d.setColor(cube[i][k].getColor());
-            			g2d.fillPolygon(cube[i][k]);
-            			g2d.setColor(Color.black);
-            		}
-            		else
-            		{
-            			g2d.setColor(this.getBackground());
-            			g2d.fillPolygon(cube[i][k]);
-            			g2d.setColor(Color.black);
-            		}
-            			
-            		g2d.drawPolygon(cube[i][k]);
-            	}
+                //draw hexa-shape
+                for(int i = 0; i<6; i++)
+                {
+                	for(int k = 0; k<5; k++)
+                	{
+                		if(s)
+                		{
+                			g2d.setColor(Color.MAGENTA);
+                			g2d.fillPolygon(cube[i][k]);
+                			g2d.setColor(Color.black);
+                		}
+                		else
+                		{
+                			g2d.setColor(Color.CYAN);
+                			g2d.fillPolygon(cube[i][k]);
+                			g2d.setColor(Color.black);
+                		}
+                			
+                		g2d.drawPolygon(cube[i][k]);
+                	}
+                }
+            }
+            
+            else
+            {
+	            //draw hexa-shape under normal gameplay
+	            for(int i = 0; i<6; i++)
+	            {
+	            	for(int k = 0; k<5; k++)
+	            	{
+	            		//check if a specific cube is marked to be filled and fill it
+	            		if(cube[i][k].isFilled())
+	            		{
+	            			g2d.setColor(cube[i][k].getColor());
+	            			g2d.fillPolygon(cube[i][k]);
+	            			g2d.setColor(Color.black);
+	            		}
+	            		else
+	            		{
+	            			g2d.setColor(this.getBackground());
+	            			g2d.fillPolygon(cube[i][k]);
+	            			g2d.setColor(Color.black);
+	            		}
+	            			
+	            		g2d.drawPolygon(cube[i][k]);
+	            	}
+	            }
             }
         }
-        
+        /**A point p is checked against all 30 possible polygons. If the point
+         * is contained within one of the polygons, that polygon is returned.
+         * Otherwise null is returned.
+         */
         public Hexashape checkIfFramed(Point p)
         {
         	for(int i = 0; i<6; i++)
@@ -375,8 +417,6 @@ class MenuDriver extends JFrame implements ActionListener
         		{
         			if(cube[i][k].contains(p))
         			{
-        				//cube[i][k].setFilled(!cube[i][k].isFilled());
-        				//if(debug) mouse.setText("   Hexashape ID: " + i + "-" + k + " Painted: "+cube[i][k].isFilled());
         				return cube[i][k];
         			}
         		}
@@ -389,14 +429,13 @@ class MenuDriver extends JFrame implements ActionListener
         	shape.setFilled(!shape.isFilled());
         }
         
-       /** Called whenever the mouse is pressed.
+        /** Called whenever the mouse is pressed.
          * Could be replaced with setting the value of a JLabel, etc. */
         public void mousePressed(MouseEvent e) 
         {
         	Point p = e.getPoint();
-            //if(triangle.contains(p)) mouse.setText("Inside Triangle");
             Hexashape focus = checkIfFramed(p);    	          
-            if(focus!=null)
+            if(focus!=null && winMode == false)
         	{
         		//check is filled already
         		if(!focus.isFilled())
@@ -411,41 +450,32 @@ class MenuDriver extends JFrame implements ActionListener
         		repaint();
         		//displayWin(cube[2][2]);
         		checkWin();
-        	}	
-        	else if (debug) 
-        	{
-        		mouse.setText("   Outside Bounds");
-        	}
-        	
+        	}	        	
         }
-    
-        //Required methods for MouseListener, though the only one you care about is click
-        public void mouseReleased(MouseEvent e) {}
-        public void mouseEntered(MouseEvent e) {}
-        public void mouseExited(MouseEvent e) {}
-        public void mouseClicked(MouseEvent e) {}
         
-        public void displayWin(Hexashape cube)
+        public void displayWin()
         {
-        	int flashnumber = 10;
-        	int x = cube.getX();
-        	int y = cube.getY();
+        	int repeatTimes = 10;
+        	int delay = 75;
         	
-        	for(int t = 0; t < flashnumber; t++)
-        	{
-        		cube.setColor(Color.BLUE);
-        		repaint();
-        		try 
-        		{
-        			Thread.sleep(5);
-        	    } 
-        		catch (InterruptedException e) 
-        		{
-        			e.printStackTrace();
+        	winMode = true;
+        	displayWinMode = true;
+        	Timer timercasovac = new Timer(delay, new ActionListener() {
+        	    private int counter;
+
+        	    @Override
+        	    public void actionPerformed(ActionEvent e) {
+        	        s = !s;
+        	        repaint();
+        	        counter++;
+        	        if (counter == repeatTimes) {
+        	            ((Timer)e.getSource()).stop();
+        	            displayWinMode = false;
+        	            repaint();
+        	        }
         	    }
-        		cube.setColor(Color.RED);
-        		repaint();   		
-        	}
+        	});
+        	timercasovac.start();
         }
         
         public void checkWin()
@@ -453,7 +483,13 @@ class MenuDriver extends JFrame implements ActionListener
             if(game.gameWin())
             {
             	System.out.println(game.getWinner());
+            	displayWin();
             }         		
+        }
+        
+        public void resetBoard()
+        {
+        	
         }
         
         public void setCubePlots()
@@ -497,8 +533,6 @@ class MenuDriver extends JFrame implements ActionListener
             	cube[3][i] = new Hexashape(3,i);
             	cube[3][i].addPoint((int) (r+(cos*(5-(i))*w)), (int) (r+(.5*(5-(i))*w)));
             	cube[3][i].addPoint((int)r, (int)((10-i)*w));
-            	//use this line as a blueprint to fix the rest of the code
-            	//cube[3][i].addPoint(r, (int) (fw*(1-(i*0.10))));
             	cube[3][i].addPoint((int)r, (int)((9-i)*w));				
             	cube[3][i].addPoint((int) (r+(cos*(5-(i+1))*w)), (int) (r+(.5*(5-(i+1))*w)));
             }
@@ -521,5 +555,11 @@ class MenuDriver extends JFrame implements ActionListener
           		cube[5][i].addPoint((int) (r-(cos*(5-(i+1))*w)), (int) (r+(.5*(5-(i+1))*w)));
           	}
         }
+            
+        //Required methods for MouseListener, though the only one you care about is click
+        public void mouseReleased(MouseEvent e) {}
+        public void mouseEntered(MouseEvent e) {}
+        public void mouseExited(MouseEvent e) {}
+        public void mouseClicked(MouseEvent e) {}
     }
 }
