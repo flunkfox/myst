@@ -46,9 +46,15 @@ public class GameBrain
         }
     }
     
-    public void setMode()
+    //this method sets the mode to either single player or multiplayer
+    public void setMode(String mode)
     {
-    	
+        if(mode=="singleplayer")
+        {
+           singlePlayer=true; 
+        }
+        else
+            singlePlayer=false;
     }
     
     //method to see if the game has been won either of the three ways
@@ -368,17 +374,33 @@ public class GameBrain
     }
     public int whosTurn()
     {
-        if(turn%2==0)
+        if(singlePlayer==true)
         {
-            turn++;
-            return 2;
+            if(turn%2==0)
+            {
+                turn++;
+                compComp();
+                return 2;
+            }
+            else
+            {
+                turn++;
+                return 1;
+            }
         }
         else
         {
-            turn++;
-            return 1;
-        }
-            
+            if(turn%2==0)
+            {
+                turn++;
+                return 2;
+            }
+            else
+            {
+                turn++;
+                return 1;
+            }
+        }   
     }
     public void boardReset()
     {
@@ -393,6 +415,7 @@ public class GameBrain
             }
         }
     }
+    
     /*public void setUpR()//sets up the board to test if the radial win check is working correctly
     {
         board[0][0]=2;

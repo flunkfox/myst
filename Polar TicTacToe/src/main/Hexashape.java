@@ -8,7 +8,7 @@ public class Hexashape extends Polygon
 	private int yaxis;
 	private boolean filled = false;
 	private boolean highlighted = false;
-	private Color fillColor = Color.pink;
+	private Color fillColor;
 	
 	public Hexashape(int newx, int newy)
 	{

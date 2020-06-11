@@ -21,6 +21,9 @@ class MenuDriver extends JFrame implements ActionListener
 	private JButton back;
 	private JButton play;
 	
+	private Color player1color = Color.pink;
+	private Color player2color = Color.blue;
+	
 	//the main menu panel
 	private JPanel Menu;
 	//the sub menu panel
@@ -288,6 +291,7 @@ class MenuDriver extends JFrame implements ActionListener
         if(j.equals(multi))
         {
         	game.setMode("multiplayer");
+        	card.show(cont, "submenu");
         	//System.out.println("multiplayer button");
         } 
         if(j.equals(back))
@@ -385,18 +389,19 @@ class MenuDriver extends JFrame implements ActionListener
         {
         	Point p = e.getPoint();
             //if(triangle.contains(p)) mouse.setText("Inside Triangle");
-            Hexashape focus = checkIfFramed(p);
-        	if(game.equals(obj))
-            
+            Hexashape focus = checkIfFramed(p);    	          
             if(focus!=null)
         	{
-        		
-        		
-        		
-        		game.setSpace(focus.getX(),focus.getY());
-        		focus.getX()
-        		
-        		flipFilled(focus);
+        		//check is filled already
+        		if(!focus.isFilled())
+        		{
+        			if(game.whosTurn()==1)
+                		focus.setColor(player1color);
+                	else
+                		focus.setColor(player2color);
+        			game.setSpace(focus.getX(),focus.getY());
+        			flipFilled(focus);
+        		}
         		repaint();
         		//displayWin(cube[2][2]);
         	}	
