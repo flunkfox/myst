@@ -165,7 +165,17 @@ public class GameBrain
 	   		nextrow = row - 1;
     	
 	    int nextcol = col + 1;
-    	if(nextcol < 5)
+	    if(col==4)
+	    {
+	        if(count == 4)
+                return true;
+            else if(board[nextrow][nextcol] == player)
+            {
+                count++;
+                return leftDiagonalRecurse(player, nextrow, nextcol, count);
+            }
+	    }
+	    else if(nextcol < 5)
     	{
     		if(count == 4)
 	    		return true;
@@ -188,7 +198,17 @@ public class GameBrain
 	   		nextrow = row + 1;
     	
 	    int nextcol = col + 1;
-    	if(nextcol < 5)
+	    if(col==4)
+	    {
+	        if(count == 4)
+                return true;
+            else if(board[nextrow][nextcol] == player)
+            {
+                count++;
+                return rightDiagonalRecurse(player, nextrow, nextcol, count);
+            }
+	    }
+	    else if(nextcol < 5)
     	{
     		if(count == 4)
 	    		return true;
@@ -201,196 +221,7 @@ public class GameBrain
     	return false;
     }
     
-        /*
-        int a =0; 
-        while(a<3)//rows- if a>3 the diagonal pattern will not be continuous and will not count as a victory
-        {
-            for(int b=0; b<board[0].length; b++)//columns
-            {
-                if(board[a][b]==1)
-                {
-                    if(b==0)
-                    {
-                        if(board[a+1][4]==1&&board[a+2][3]==1&&board[a+3][2]==1)
-                        {
-                            winner = "Player 1";
-                            score1++;
-                            System.out.println(winner);
-                            return true;
-                        }
-                        else if(board[a+1][b+1]==1&&board[a+2][b+2]==1&&board[a+3][b+3]==1)
-                        {
-                            winner = "Player 1";
-                            score1++;
-                            System.out.println(winner);
-                            return true;
-                        }
-                    }
-                    else if(b==1)
-                    {
-                        if(board[a+1][0]==1&&board[a+2][4]==1&&board[a+3][3]==1)
-                        {
-                            winner = "Player 1";
-                            score1++;
-                            System.out.println(winner);
-                            return true;
-                        }
-                        else if(board[a+1][b+1]==1&&board[a+2][b+2]==1&&board[a+3][b+3]==1)
-                        {
-                            winner = "Player 1";
-                            score1++;
-                            System.out.println(winner);
-                            return true;
-                        }
-                    }
-                    else if(b==2)
-                    {
-                        if(board[a+1][1]==1&&board[a+2][0]==1&&board[a+3][4]==1)
-                        {
-                            winner = "Player 1";
-                            score1++;
-                            System.out.println(winner);
-                            return true;
-                        }
-                        else if(board[a+1][b+1]==1&&board[a+2][b+2]==1&&board[a+3][0]==1)
-                        {
-                            winner = "Player 1";
-                            score1++;
-                            System.out.println(winner);
-                            return true;
-                        }
-                    }
-                    else if(b==3)
-                    {
-                        if(board[a+1][b-1]==1&&board[a+2][b-2]==1&&board[a+3][b-3]==1)
-                        {
-                            winner = "Player 1";
-                            score1++;
-                            System.out.println(winner);
-                            return true;
-                        }
-                        else if(board[a+1][b+1]==1&&board[a+2][0]==1&&board[a+3][1]==1)
-                        {
-                            winner = "Player 1";
-                            score1++;
-                            System.out.println(winner);
-                            return true;
-                        }
-
-                    }
-                    else if(b==4)
-                    {
-                        if(board[a+1][b-1]==1&&board[a+2][b-2]==1&&board[a+3][b-3]==1)
-                        {
-                            winner = "Player 1";
-                            score1++;
-                            System.out.println(winner);
-                            return true;
-                        }
-                        else if(board[a+1][0]==1&&board[a+2][1]==1&&board[a+3][2]==1)
-                        {
-                            winner = "Player 1";
-                            score1++;
-                            System.out.println(winner);
-                            return true;
-                        }
-                    }
-                    
-                }
-                else if(board[a][b]==2)
-                {
-                    if(b==0)
-                    {
-                        if(board[a+1][4]==2&&board[a+2][3]==2&&board[a+3][2]==2)
-                        {
-                            winner = "Player 2";
-                            score2++;
-                            System.out.println(winner);
-                            return true;
-                        }
-                        else if(board[a+1][b+1]==2&&board[a+2][b+2]==2&&board[a+3][b+3]==2)
-                        {
-                            winner = "Player 2";
-                            score2++;
-                            System.out.println(winner);
-                            return true;
-                        }
-                    }
-                    else if(b==1)
-                    {
-                        if(board[a+1][0]==2&&board[a+2][4]==2&&board[a+3][3]==2)
-                        {
-                            winner = "Player 2";
-                            score2++;
-                            System.out.println(winner);
-                            return true;
-                        }
-                        else if(board[a+1][b+1]==2&&board[a+2][b+2]==2&&board[a+3][b+3]==2)
-                        {
-                            winner = "Player 2";
-                            score2++;
-                            System.out.println(winner);
-                            return true;
-                        }
-                    }
-                    else if(b==2)
-                    {
-                        if(board[a+1][1]==2&&board[a+2][0]==2&&board[a+3][4]==2)
-                        {
-                            winner = "Player 2";
-                            score2++;
-                            System.out.println(winner);
-                            return true;
-                        }
-                        else if(board[a+1][b+1]==2&&board[a+2][b+2]==2&&board[a+3][0]==2)
-                        {
-                            winner = "Player 2";
-                            score2++;
-                            System.out.println(winner);
-                            return true;
-                        }
-                    }
-                    else if(b==2)
-                    {
-                        if(board[a+1][b-1]==2&&board[a+2][b-2]==2&&board[a+3][b-3]==2)
-                        {
-                            winner = "Player 2";
-                            score2++;
-                            System.out.println(winner);
-                            return true;
-                        }
-                        else if(board[a+1][b+1]==2&&board[a+2][0]==2&&board[a+3][1]==2)
-                        {
-                            winner = "Player 2";
-                            score2++;
-                            System.out.println(winner);
-                            return true;
-                        }
-
-                    }
-                    else if(b==4)
-                    {
-                        if(board[a+1][b-1]==2&&board[a+2][b-2]==2&&board[a+3][b-3]==2)
-                        {
-                            winner = "Player 2";
-                            score2++;
-                            System.out.println(winner);
-                            return true;
-                        }
-                        else if(board[a+1][0]==2&&board[a+2][1]==2&&board[a+3][2]==2)
-                        {
-                            winner = "Player 2";
-                            score2++;
-                            System.out.println(winner);
-                            return true;
-                        }
-                    }
-                    
-                }
-            }
-            a++;
-        }
-        */
+        
         
     //pre: int x and int y are variables representing the row and column in the array that the current player has selected to play at
     //post: returns true if the selected space is unoccupied, false if the space is occupied
