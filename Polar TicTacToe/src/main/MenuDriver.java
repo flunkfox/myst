@@ -7,6 +7,8 @@ import java.awt.event.*;
 import java.util.Hashtable;
 class MenuDriver extends JFrame implements ActionListener
 {
+	private GameBrain game;
+	
 	private int psize = 700;
 	private boolean debug = true;
 	private JLabel mouse;
@@ -30,8 +32,10 @@ class MenuDriver extends JFrame implements ActionListener
 	//the game over panel
 	private JPanel GameOver;
 
-	public MenuDriver()
+	public MenuDriver(GameBrain newgame)
 	{
+	game = newgame;
+		
 	setTitle("Prototype Menu");
 	setLocationRelativeTo(null);
 	setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -278,12 +282,12 @@ class MenuDriver extends JFrame implements ActionListener
         if(j.equals(single))
         {
         	card.show(cont, "submenu");
-        	//game.setMode("singleplayer");
+        	game.setMode("singleplayer");
         	//System.out.println("singleplayer button");
         }
         if(j.equals(multi))
         {
-        	//game.setMode("multiplayer")
+        	game.setMode("multiplayer");
         	//System.out.println("multiplayer button");
         } 
         if(j.equals(back))
@@ -293,6 +297,7 @@ class MenuDriver extends JFrame implements ActionListener
         } 
         if(j.equals(play))
         {
+        	game.setUp();
         	card.show(cont, "game");
         	//System.out.println("Play button");
         }
@@ -381,9 +386,16 @@ class MenuDriver extends JFrame implements ActionListener
         	Point p = e.getPoint();
             //if(triangle.contains(p)) mouse.setText("Inside Triangle");
             Hexashape focus = checkIfFramed(p);
-        	if(focus!=null)
+        	if(game.equals(obj))
+            
+            if(focus!=null)
         	{
-        		//mouse.setText("Inside Polygon: " + focus);
+        		
+        		
+        		
+        		game.setSpace(focus.getX(),focus.getY());
+        		focus.getX()
+        		
         		flipFilled(focus);
         		repaint();
         		//displayWin(cube[2][2]);

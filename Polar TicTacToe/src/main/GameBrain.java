@@ -23,12 +23,14 @@ public class GameBrain
     }
     
     //sets the given space to either 1 or 2, depending on whos turn it is
-    public void setSpace(int r, int c)
+    public boolean setSpace(int r, int c)
     {
         if(isLegal(r,c)==true)
         {
             board[r][c]= whosTurn();
+            return true;
         }
+        return false;
     }
     
    
@@ -43,6 +45,12 @@ public class GameBrain
             }
         }
     }
+    
+    public void setMode()
+    {
+    	
+    }
+    
     //method to see if the game has been won either of the three ways
     public boolean gameWin()
     {
