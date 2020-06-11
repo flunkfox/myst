@@ -58,6 +58,24 @@ public class GameBrain
             singlePlayer=false;
     }
     
+    public boolean radialRecurse(int player, int row, int col, int count)
+    {
+    	int nextrow;
+    	if(row + 1 > 5)
+    		nextrow = 0;
+    	else
+    		nextrow = row + 1;
+    	
+    	if(count == 4)
+    		return true;
+    	else if(board[nextrow][col] == player)
+    	{
+    		count++;
+    		return radialRecurse(player, nextrow, col, count);
+    	}
+    	else
+    		return false;
+    }
     //method to see if the game has been won either of the three ways
     public boolean gameWin()
     {
@@ -100,57 +118,91 @@ public class GameBrain
             
         }
         //This section of gameWin checks the board to see if there is a current radial victory, and it records who won
-        for(int j=0; j<board[0].length;j++)
+        for(int i = 0; i < board[0].length; i++)
         {
-            if(board[0][j]!=0&&board[0][j]==board[1][j]&&board[1][j]==board[2][j]&&board[2][j]==board[3][j])
+        	for(int k = 0; k < board.length; k++)
             {
-                if(board[0][j]==1)
-                {
-                    winner = "Player 1";
-                    score1++;
-                }
-                else
-                {
-                    winner = "Player 2";
-                    score2++;
-                }
-                System.out.println(winner);
-                return true;
+            	if(board[k][i] != 0 && radialRecurse(board[k][i],k,i,1))
+            	{
+            		//win scenario
+            		winner = ("Player: " + board[k][i]);
+            		return true;
+            	}
             }
-            else if(board[1][j]!=0&&board[1][j]==board[2][j]&&board[2][j]==board[3][j]&&board[3][j]==board[4][j])
-            {
-                if(board[1][j]==1)
-                {
-                    winner = "Player 1";
-                    score1++;
-                }
-                else    
-                {
-                    winner = "Player 2";
-                    score2++;
-                }
-                System.out.println(winner);
-                return true;
-            }
-            else if(board[2][j]!=0&&board[2][j]==board[3][j]&&board[3][j]==board[4][j]&&board[4][j]==board[5][j])
-            {
-                if(board[2][j]==1)
-                {
-                    winner = "Player 1";
-                    score1++;
-                }
-                else    
-                {
-                    winner = "Player 2";
-                    score2++;
-                }
-                System.out.println(winner);
-                return true;
-            }
-            
         }
-        int a =0;
+        
+        
         //This section of gameWin will check to see if there is a current diagonal win on the board and records the winner
+        for(int i = 0; i < board[0].length ; i++)
+        {
+        	for(int k = 0; k < board.length; k++)
+            {
+            	if(board[k][i] != 0 && rightDiagonalRecurse(board[k][i],k,i,1))
+            	{
+            		//win scenario
+            		winner = ("Player: " + board[k][i]);
+            		return true;
+            	}
+            	if(board[k][i] != 0 && leftDiagonalRecurse(board[k][i],k,i,1))
+            	{
+            		//win scenario
+            		winner = ("Player: " + board[k][i]);
+            		return true;
+            	}
+            }
+        }
+        return false;
+        
+    }
+    
+    public boolean leftDiagonalRecurse(int player, int row, int col, int count)
+    {
+    	int nextrow;			
+    	//gets the next row
+	    if(row - 1 < 0)
+	   		nextrow = 5;
+	   	else
+	   		nextrow = row - 1;
+    	
+	    int nextcol = col + 1;
+    	if(nextcol < 5)
+    	{
+    		if(count == 4)
+	    		return true;
+	    	else if(board[nextrow][nextcol] == player)
+	    	{
+	    		count++;
+	    		return leftDiagonalRecurse(player, nextrow, nextcol, count);
+	    	}	
+    	}
+    	return false;
+    }
+    
+    public boolean rightDiagonalRecurse(int player, int row, int col, int count)
+    {
+    	int nextrow;			
+    	//gets the next row
+	    if(row + 1 > 5)
+	   		nextrow = 0;
+	   	else
+	   		nextrow = row + 1;
+    	
+	    int nextcol = col + 1;
+    	if(nextcol < 5)
+    	{
+    		if(count == 4)
+	    		return true;
+	    	else if(board[nextrow][nextcol] == player)
+	    	{
+	    		count++;
+	    		return rightDiagonalRecurse(player, nextrow, nextcol, count);
+	    	}	
+    	}
+    	return false;
+    }
+    
+        /*
+        int a =0; 
         while(a<3)//rows- if a>3 the diagonal pattern will not be continuous and will not count as a victory
         {
             for(int b=0; b<board[0].length; b++)//columns
@@ -338,9 +390,8 @@ public class GameBrain
             }
             a++;
         }
-        return false;
+        */
         
-    }
     //pre: int x and int y are variables representing the row and column in the array that the current player has selected to play at
     //post: returns true if the selected space is unoccupied, false if the space is occupied
     public boolean isLegal(int x, int y)
