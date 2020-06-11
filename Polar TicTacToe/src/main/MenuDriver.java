@@ -48,8 +48,8 @@ class MenuDriver extends JFrame implements ActionListener
 	
 	cont = new JPanel();
 	cont.setLayout(card);
-	cont.add("menu", initMenu());
-	cont.add("submenu", initSubMenu());
+	//cont.add("menu", initMenu());
+	//cont.add("submenu", initSubMenu());
 	cont.add("game", initGame());
 	
 	add(cont);
@@ -404,6 +404,7 @@ class MenuDriver extends JFrame implements ActionListener
         		}
         		repaint();
         		//displayWin(cube[2][2]);
+        		checkWin();
         	}	
         	else if (debug) 
         	{
@@ -440,9 +441,13 @@ class MenuDriver extends JFrame implements ActionListener
         		repaint();   		
         	}
         }
+        
         public void checkWin()
         {
-            game.gameWin();
+            if(game.gameWin())
+            {
+            	System.out.println(game.getWinner());
+            }         		
         }
         
         public void setCubePlots()

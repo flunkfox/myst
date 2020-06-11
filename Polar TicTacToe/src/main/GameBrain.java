@@ -413,6 +413,14 @@ public class GameBrain
         }
     }
     
+    public String getWinner()
+    {
+    	if(winner != null)
+    		return winner;
+    	else
+    		return "null";
+    }
+    
     /*public void setUpR()//sets up the board to test if the radial win check is working correctly
     {
         board[0][0]=2;
