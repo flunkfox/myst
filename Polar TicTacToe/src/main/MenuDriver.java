@@ -440,6 +440,10 @@ class MenuDriver extends JFrame implements ActionListener
         		repaint();   		
         	}
         }
+        public void checkWin()
+        {
+            game.gameWin();
+        }
         
         public void setCubePlots()
         {
