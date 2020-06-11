@@ -25,6 +25,8 @@ class MenuDriver extends JFrame implements ActionListener
 	private JButton multi;
 	private JButton back;
 	private JButton play;
+	private JButton next;
+	private JButton quit;
 	private JLabel pl2;
 	
 	private Color player1color = Color.pink;
@@ -56,8 +58,8 @@ class MenuDriver extends JFrame implements ActionListener
 	
 	cont = new JPanel();
 	cont.setLayout(card);
-	cont.add("menu", initMenu());
-	cont.add("submenu", initSubMenu());
+	//cont.add("menu", initMenu());
+	//cont.add("submenu", initSubMenu());
 	cont.add("game", initGame());
 	
 	add(cont);
@@ -227,7 +229,7 @@ class MenuDriver extends JFrame implements ActionListener
 		    	slider.setMinorTickSpacing(1);
 		    	slider.setPaintTicks(true);
 		    	//Create the label table
-		    	Hashtable labelTable = new Hashtable();
+		    	Hashtable<Integer, JLabel> labelTable = new Hashtable<Integer, JLabel>();
 		    	labelTable.put( new Integer( 1 ), new JLabel("1") );
 		    	labelTable.put( new Integer( 5 ), new JLabel("5") );
 		    	labelTable.put( new Integer( 10 ), new JLabel("10") );
@@ -269,7 +271,11 @@ class MenuDriver extends JFrame implements ActionListener
 	}
 
 	public JPanel initGame()
-	{
+	{	
+		ImageIcon panel = new ImageIcon("src\\icons\\panel.png");
+		ImageIcon button = new ImageIcon("src\\icons\\small_button.png");
+		ImageIcon pressed = new ImageIcon("src\\icons\\small_button_press.png");
+		ImageIcon clicked = new ImageIcon("src\\icons\\small_light_button_press.png");
 		
 		Border emptyBorder = BorderFactory.createEmptyBorder();
 		Game = new JPanel(new FlowLayout(FlowLayout.LEFT,0,0));
@@ -281,6 +287,34 @@ class MenuDriver extends JFrame implements ActionListener
         Game.add(new Canvas());
         Game.add(hud);
         
+        Box hudbuttons = Box.createVerticalBox();
+	    next = new JButton();
+		    next.setBorder(emptyBorder);
+		    next.setText("Next Game");
+		    next.setHorizontalTextPosition(JLabel.CENTER);
+		    next.setForeground(Color.WHITE);
+		    next.setFont(new Font("Rockwell", Font.PLAIN, 27));
+		    next.setIcon(button);
+		    next.setRolloverIcon(pressed);
+		    next.setPressedIcon(clicked);
+		    next.addActionListener(this);
+		quit  = new JButton();
+			quit.setBorder(emptyBorder);
+			quit.setText("Quit");
+			quit.setHorizontalTextPosition(JLabel.CENTER);
+			quit.setForeground(Color.WHITE);
+			quit.setFont(new Font("Rockwell", Font.PLAIN, 27));
+			quit.setIcon(button);
+			quit.setRolloverIcon(pressed);
+			quit.setPressedIcon(clicked);
+			quit.addActionListener(this);
+		hudbuttons.add(Box.createRigidArea(new Dimension(0,600)));
+		hudbuttons.add(next);
+		hudbuttons.add(Box.createRigidArea(new Dimension(0,10)));
+		hudbuttons.add(quit);
+		//hud.add(Box.createRigidArea(new Dimension(0,600)));
+		hud.add(hudbuttons);
+		
         return Game;
 	}
  	
