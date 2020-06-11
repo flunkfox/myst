@@ -28,6 +28,7 @@ public class GameBrain
         if(isLegal(r,c)==true)
         {
             board[r][c]= whosTurn();
+            turn++;
             return true;
         }
         return false;
@@ -378,13 +379,11 @@ public class GameBrain
         {
             if(turn%2==0)
             {
-                turn++;
                 compComp();
                 return 2;
             }
             else
             {
-                turn++;
                 return 1;
             }
         }
@@ -392,12 +391,10 @@ public class GameBrain
         {
             if(turn%2==0)
             {
-                turn++;
                 return 2;
             }
             else
             {
-                turn++;
                 return 1;
             }
         }   
