@@ -60,10 +60,10 @@ class MenuDriver extends JFrame implements ActionListener
 	
 	public JPanel initMenu()
 	{
-		JLabel background=new JLabel(new ImageIcon("C:\\Users\\Owner\\Pictures\\test.png"));
-		ImageIcon button = new ImageIcon("C:\\\\Users\\\\Owner\\\\Pictures\\\\button.png");
-		ImageIcon pressed = new ImageIcon("C:\\\\Users\\\\Owner\\\\Pictures\\\\button_press.png");
-		ImageIcon clicked = new ImageIcon("C:\\\\Users\\\\Owner\\\\Pictures\\\\light_button_press.png");
+		JLabel background=new JLabel(new ImageIcon("src\\icons\\test.png"));
+		ImageIcon button = new ImageIcon("src\\icons\\button.png");
+		ImageIcon pressed = new ImageIcon("src\\icons\\button_press.png");
+		ImageIcon clicked = new ImageIcon("src\\icons\\light_button_press.png");
 		
 		Menu = new JPanel();
 			Menu.setPreferredSize(new Dimension(psize+200, psize));
@@ -109,11 +109,11 @@ class MenuDriver extends JFrame implements ActionListener
 	@SuppressWarnings("unchecked")
 	public JPanel initSubMenu()
 	{
-		JLabel background=new JLabel(new ImageIcon("C:\\Users\\Owner\\Pictures\\test2.png"));
-		ImageIcon panel = new ImageIcon("C:\\\\Users\\\\Owner\\\\Pictures\\\\panel.png");
-		ImageIcon button = new ImageIcon("C:\\\\Users\\\\Owner\\\\Pictures\\\\small_button.png");
-		ImageIcon pressed = new ImageIcon("C:\\\\Users\\\\Owner\\\\Pictures\\\\small_button_press.png");
-		ImageIcon clicked = new ImageIcon("C:\\\\Users\\\\Owner\\\\Pictures\\\\small_light_button_press.png");
+		JLabel background=new JLabel(new ImageIcon("src\\icons\\test2.png"));
+		ImageIcon panel = new ImageIcon("src\\icons\\panel.png");
+		ImageIcon button = new ImageIcon("src\\icons\\small_button.png");
+		ImageIcon pressed = new ImageIcon("src\\icons\\small_button_press.png");
+		ImageIcon clicked = new ImageIcon("src\\icons\\small_light_button_press.png");
 		SubMenu = new JPanel();
 		SubMenu.setPreferredSize(new Dimension(psize, psize));
 		SubMenu.setLayout(new BorderLayout());
