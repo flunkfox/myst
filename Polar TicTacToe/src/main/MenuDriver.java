@@ -404,7 +404,6 @@ class MenuDriver extends JFrame implements ActionListener
         			flipFilled(focus);
         		}
         		repaint();
-        		
         		//displayWin(cube[2][2]);
         	}	
         	else if (debug) 
@@ -412,10 +411,6 @@ class MenuDriver extends JFrame implements ActionListener
         		mouse.setText("   Outside Bounds");
         	}
         	
-        }
-        public void checkWin()
-        {
-            game.gameWin();
         }
     
         //Required methods for MouseListener, though the only one you care about is click
