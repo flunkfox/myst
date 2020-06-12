@@ -8,6 +8,8 @@ import java.util.Hashtable;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 class MenuDriver extends JFrame implements ActionListener
 {
 	private GameBrain game;
@@ -32,6 +34,8 @@ class MenuDriver extends JFrame implements ActionListener
 	private JLabel pl4;
 	private JLabel sc1;
 	private JLabel sc2;
+	private JLabel remaining;
+	private JLabel winmessage;
 	
 	private Color player1color = Color.pink;
 	private Color player2color = Color.blue;
@@ -240,6 +244,13 @@ class MenuDriver extends JFrame implements ActionListener
 		    	labelTable.put( new Integer( 15 ), new JLabel("15") );
 		    	slider.setLabelTable( labelTable );
 		    	slider.setPaintLabels(true);
+		    	//change state listener that listens if the slider is changed
+		    	slider.addChangeListener(new ChangeListener() {
+		            public void stateChanged(ChangeEvent e) {
+		                System.out.println("Value of the slider is: " + ((JSlider)e.getSource()).getValue());
+		                game.setRemain(((JSlider)e.getSource()).getValue());
+		            }
+		        });
 		    content.add(slider);
 		    background.add(content);
 		    content.add(Box.createRigidArea(new Dimension(0,30)));
@@ -315,6 +326,10 @@ class MenuDriver extends JFrame implements ActionListener
 			sc2.setHorizontalTextPosition(JLabel.CENTER);
 			sc2.setForeground(Color.BLACK);
 			sc2.setFont(new Font("Calibri", Font.BOLD, 27));
+		remaining = new JLabel(" ");
+			remaining.setHorizontalTextPosition(JLabel.CENTER);
+			remaining.setForeground(Color.BLACK);
+			remaining.setFont(new Font("Calibri", Font.BOLD, 27));
         next = new JButton();
 		    next.setBorder(emptyBorder);
 		    next.setText("Next Game");
@@ -325,6 +340,7 @@ class MenuDriver extends JFrame implements ActionListener
 		    next.setRolloverIcon(pressed);
 		    next.setPressedIcon(clicked);
 		    next.addActionListener(this);
+		    next.setEnabled(false);
 		quit  = new JButton();
 			quit.setBorder(emptyBorder);
 			quit.setText("Quit");
@@ -343,7 +359,9 @@ class MenuDriver extends JFrame implements ActionListener
 		hudbuttons.add(Box.createRigidArea(new Dimension(0,40)));
 		hudbuttons.add(pl4);
 		hudbuttons.add(sc2);
-		hudbuttons.add(Box.createRigidArea(new Dimension(0,350)));
+		hudbuttons.add(Box.createRigidArea(new Dimension(0,10)));
+		hudbuttons.add(remaining);
+		hudbuttons.add(Box.createRigidArea(new Dimension(0,300)));
 		hudbuttons.add(next);
 		hudbuttons.add(Box.createRigidArea(new Dimension(0,10)));
 		hudbuttons.add(quit);
@@ -386,6 +404,7 @@ class MenuDriver extends JFrame implements ActionListener
         {
         	game.setUp();
         	card.show(cont, "game");
+        	System.out.println("Games Remaining: " + game.getData()[2]);
         	//System.out.println("Play button");
         }
         if(j.equals(quit))
@@ -542,6 +561,8 @@ class MenuDriver extends JFrame implements ActionListener
         	int repeatTimes = 10;
         	int delay = 75;
         	
+        	remaining.setText(game.getWinner() + " wins!");
+        	next.setEnabled(true);
         	winMode = true;
         	displayWinMode = true;
         	updateScore();
@@ -660,7 +681,10 @@ class MenuDriver extends JFrame implements ActionListener
         
         public void resetBoard()
         {
-	    	//turn win mode off
+	    	//reset winner notification
+        	remaining.setText(" ");
+        	next.setEnabled(false);
+        	//turn win mode off
 	    	winMode = false;
 	    	//turn display win mode off
 	    	setDWinMode(false);
@@ -672,6 +696,7 @@ class MenuDriver extends JFrame implements ActionListener
 	    			cube[i][k].setFilled(false);
 	    		}
 	    	}
+	    	System.out.println("Games Remaining: " + game.getData()[2]);
     	repaint();
         }
     }
