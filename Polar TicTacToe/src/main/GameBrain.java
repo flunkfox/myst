@@ -12,7 +12,7 @@ public class GameBrain
     private int[][] board = new int[6][5];
     private String winner;
     private int turn=1;
-    private int score1 =0;
+    private int score1;
     private int score2 =0;
     private boolean singlePlayer;
     private int gamesLeft;
@@ -307,7 +307,15 @@ public class GameBrain
     	else
     		return "null";
     }
-    
+    public int[] getData()
+    {
+        int[] data = new int[3];
+        data[0]=score1;
+        data[1]=score2;
+        data[2]=gamesLeft;
+        return data;
+        //poopie
+    }
     /*public void setUpR()//sets up the board to test if the radial win check is working correctly
     {
         board[0][0]=2;
