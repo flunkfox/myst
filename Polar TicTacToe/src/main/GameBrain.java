@@ -314,7 +314,7 @@ public class GameBrain
         data[1]=score2;
         data[2]=gamesLeft;
         return data;
-        //poop
+        //poopie
     }
     /*public void setUpR()//sets up the board to test if the radial win check is working correctly
     {
