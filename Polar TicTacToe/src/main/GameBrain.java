@@ -131,7 +131,7 @@ public class GameBrain
             	    else
             	        score2++;
             		//win scenario
-            		winner = ("Player: " + board[k][i]);
+            		winner = ("Player " + board[k][i]);
             		gamesLeft--;
             		return true;
             	}
@@ -151,7 +151,7 @@ public class GameBrain
                     else
                         score2++;
                     //win scenario
-                    winner = ("Player: " + board[k][i]);
+                    winner = ("Player " + board[k][i]);
                     gamesLeft--;
                     return true;
             	}
