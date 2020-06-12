@@ -12,7 +12,7 @@ public class GameBrain
     private int[][] board = new int[6][5];
     private String winner;
     private int turn=1;
-    private int score1 =0;
+    private int score1;
     private int score2 =0;
     private boolean singlePlayer;
     private int gamesLeft;
