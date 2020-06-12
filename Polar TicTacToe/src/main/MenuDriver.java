@@ -5,13 +5,15 @@ import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.Hashtable;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 class MenuDriver extends JFrame implements ActionListener
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private GameBrain game;
 	
 	private int psize = 700;
@@ -52,18 +54,15 @@ class MenuDriver extends JFrame implements ActionListener
 	private JPanel Game;
 	//the panel where all the info is displayed
 	private JPanel hud;
-	//the game over panel
-	private JPanel gumover;
-	
+	//the game over panel	
 	private JPanel GameOver;
-
-
 	
 	public MenuDriver(GameBrain newgame)
 	{
 	game = newgame;
 	
-	Image icon = Toolkit.getDefaultToolkit().getImage("src\\icons\\icon.png");
+	//getClass().getResource("/icons/icon.png");
+	Image icon = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/icons/icon.png"));
     setIconImage(icon);
 	
 	setTitle("POLAR TIC-TAC-TOE - by sam and alex!");
@@ -87,10 +86,10 @@ class MenuDriver extends JFrame implements ActionListener
 	
 	public JPanel initMenu()
 	{
-		JLabel background=new JLabel(new ImageIcon("src\\icons\\test.png"));
-		ImageIcon button = new ImageIcon("src\\icons\\button.png");
-		ImageIcon pressed = new ImageIcon("src\\icons\\button_press.png");
-		ImageIcon clicked = new ImageIcon("src\\icons\\light_button_press.png");
+		JLabel background=new JLabel(new ImageIcon(getClass().getResource("/icons/test.png")));
+		ImageIcon button = new ImageIcon(getClass().getResource("/icons/button.png"));
+		ImageIcon pressed = new ImageIcon(getClass().getResource("/icons/button_press.png"));
+		ImageIcon clicked = new ImageIcon(getClass().getResource("/icons/light_button_press.png"));
 		
 		Menu = new JPanel();
 			Menu.setPreferredSize(new Dimension(psize+200, psize));
@@ -133,14 +132,13 @@ class MenuDriver extends JFrame implements ActionListener
 		return Menu;
 	}
 	
-	@SuppressWarnings("unchecked")
 	public JPanel initSubMenu()
 	{
-		JLabel background=new JLabel(new ImageIcon("src\\icons\\test2.png"));
-		ImageIcon panel = new ImageIcon("src\\icons\\panel.png");
-		ImageIcon button = new ImageIcon("src\\icons\\small_button.png");
-		ImageIcon pressed = new ImageIcon("src\\icons\\small_button_press.png");
-		ImageIcon clicked = new ImageIcon("src\\icons\\small_light_button_press.png");
+		JLabel background=new JLabel(new ImageIcon(getClass().getResource("/icons/test2.png")));
+		ImageIcon panel = new ImageIcon(getClass().getResource("/icons/panel.png"));
+		ImageIcon button = new ImageIcon(getClass().getResource("/icons/small_button.png"));
+		ImageIcon pressed = new ImageIcon(getClass().getResource("/icons/small_button_press.png"));
+		ImageIcon clicked = new ImageIcon(getClass().getResource("/icons/small_light_button_press.png"));
 		SubMenu = new JPanel();
 		SubMenu.setPreferredSize(new Dimension(psize, psize));
 		SubMenu.setLayout(new BorderLayout());
@@ -301,10 +299,10 @@ class MenuDriver extends JFrame implements ActionListener
 
 	public JPanel initGame()
 	{	
-		ImageIcon panel = new ImageIcon("src\\icons\\panel.png");
-		ImageIcon button = new ImageIcon("src\\icons\\small_button.png");
-		ImageIcon pressed = new ImageIcon("src\\icons\\small_button_press.png");
-		ImageIcon clicked = new ImageIcon("src\\icons\\small_light_button_press.png");
+		ImageIcon panel = new ImageIcon(getClass().getResource("/icons/panel.png"));
+		ImageIcon button = new ImageIcon(getClass().getResource("/icons/small_button.png"));
+		ImageIcon pressed = new ImageIcon(getClass().getResource("/icons/small_button_press.png"));
+		ImageIcon clicked = new ImageIcon(getClass().getResource("/icons/small_light_button_press.png"));
 		
 		Border emptyBorder = BorderFactory.createEmptyBorder();
 		Game = new JPanel(new FlowLayout(FlowLayout.LEFT,0,0));
@@ -392,21 +390,21 @@ class MenuDriver extends JFrame implements ActionListener
  	
 	public JPanel initGameOver()
 	{
-		JLabel background=new JLabel(new ImageIcon("src\\icons\\test2.png"));
+		JLabel background=new JLabel(new ImageIcon(getClass().getResource("/icons/test2.png")));
 		
 		if(getPl1Score()==getPl2Score())
     		ultiwinner = "Nobody";
     	if(getPl1Score()<getPl2Score() && isSingleplayer)
-    		background.setIcon(new ImageIcon("src\\icons\\computer_final.png"));
+    		background.setIcon(new ImageIcon(getClass().getResource("/icons/computer_final.png")));
     	if(getPl1Score()<getPl2Score() && !isSingleplayer)
-    		background.setIcon(new ImageIcon("src\\icons\\player2_final.png"));
+    		background.setIcon(new ImageIcon(getClass().getResource("/icons/player2_final.png")));
     	if(getPl1Score()>getPl2Score())
-    		background.setIcon(new ImageIcon("src\\icons\\player1_final.png"));
+    		background.setIcon(new ImageIcon(getClass().getResource("/icons/player1_final.png")));
 		
-    	ImageIcon button = new ImageIcon("src\\icons\\button.png");
-		ImageIcon pressed = new ImageIcon("src\\icons\\button_press.png");
-		ImageIcon clicked = new ImageIcon("src\\icons\\light_button_press.png");
-		ImageIcon panel = new ImageIcon("src\\icons\\panel.png");
+    	ImageIcon button = new ImageIcon(getClass().getResource("/icons/button.png"));
+		ImageIcon pressed = new ImageIcon(getClass().getResource("/icons/button_press.png"));
+		ImageIcon clicked = new ImageIcon(getClass().getResource("/icons/light_button_press.png"));
+		ImageIcon panel = new ImageIcon(getClass().getResource("/icons/panel.png"));
 		
 		GameOver = new JPanel();
 			GameOver.setPreferredSize(new Dimension(psize+200, psize));
@@ -557,11 +555,11 @@ class MenuDriver extends JFrame implements ActionListener
         	System.out.println("Games Remaining: " + game.getData()[2]);
         	 if(game.whosTurn()==1)
 	            {
-	             	top.setIcon(new ImageIcon("src\\icons\\active_panel.png"));
+	             	top.setIcon(new ImageIcon(getClass().getResource("/icons/active_panel.png")));
 	            } 
 	             else
 	             {
-	             	bottom.setIcon(new ImageIcon("src\\icons\\active_panel.png"));
+	             	bottom.setIcon(new ImageIcon(getClass().getResource("/icons/active_panel.png")));
 	             }
         }
         if(j.equals(quit))
@@ -572,8 +570,8 @@ class MenuDriver extends JFrame implements ActionListener
         	slider.setValue(5);
         	canvas.resetBoard();
         	canvas.updateScore();
-        	top.setIcon(new ImageIcon("src\\icons\\panel.png"));
-        	bottom.setIcon(new ImageIcon("src\\icons\\panel.png"));
+        	top.setIcon(new ImageIcon(getClass().getResource("/icons/panel.png")));
+        	bottom.setIcon(new ImageIcon(getClass().getResource("/icons/panel.png")));
         }
         if(j.equals(next))
         {
@@ -595,11 +593,11 @@ class MenuDriver extends JFrame implements ActionListener
 	           	 
            	    if(game.whosTurn()==1)
 	            {
-	             	top.setIcon(new ImageIcon("src\\icons\\active_panel.png"));
+	             	top.setIcon(new ImageIcon(getClass().getResource("/icons/active_panel.png")));
 	            } 
 	             else
 	             {
-	             	bottom.setIcon(new ImageIcon("src\\icons\\active_panel.png"));
+	             	bottom.setIcon(new ImageIcon(getClass().getResource("/icons/active_panel.png")));
 	             }
             }
 
@@ -641,7 +639,11 @@ class MenuDriver extends JFrame implements ActionListener
 	 */
 	class Canvas extends JPanel implements MouseListener
     {
-        private Hexashape[][] cube;
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+		private Hexashape[][] cube;
         private boolean s;
         private boolean displayWinMode;
         
@@ -860,7 +862,6 @@ class MenuDriver extends JFrame implements ActionListener
         {
         	gameoverMode = true; 	
         	next.setText("Finish Game");  
-        	int win;
         	String winner = null;
         	if(getPl1Score()==getPl2Score())
         		winner = "Nobody";
@@ -881,7 +882,6 @@ class MenuDriver extends JFrame implements ActionListener
         	int[] focus = game.getData();
         	String score1 = focus[0] + " Games Won";
         	String score2 = focus[1] + " Games Won";
-        	String remain = focus[2] + " Games Remaining";
         	
         	sc1.setText(score1);
         	sc2.setText(score2);

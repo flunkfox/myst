@@ -4,6 +4,10 @@ import java.awt.Polygon;
 
 public class Hexashape extends Polygon
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int xaxis;
 	private int yaxis;
 	private boolean filled = false;
