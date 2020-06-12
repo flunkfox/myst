@@ -595,10 +595,10 @@ class MenuDriver extends JFrame implements ActionListener
 	            {
 	             	top.setIcon(new ImageIcon(getClass().getResource("/icons/active_panel.png")));
 	            } 
-	             else
-	             {
-	             	bottom.setIcon(new ImageIcon(getClass().getResource("/icons/active_panel.png")));
-	             }
+	            else
+	            {
+	            	bottom.setIcon(new ImageIcon(getClass().getResource("/icons/active_panel.png")));
+	            }
             }
 
         }
@@ -801,14 +801,14 @@ class MenuDriver extends JFrame implements ActionListener
                         if(game.whosTurn()==1)
                         {
                         	focus.setColor(player1color);
-                        	top.setIcon(new ImageIcon("src\\icons\\panel.png"));
-                        	bottom.setIcon(new ImageIcon("src\\icons\\active_panel.png"));
+                        	top.setIcon(new ImageIcon(getClass().getResource("/icons/panel.png")));
+                        	bottom.setIcon(new ImageIcon(getClass().getResource("/icons/active_panel.png")));
                         } 
                         else
                         {
                         	focus.setColor(player2color);
-                        	top.setIcon(new ImageIcon("src\\icons\\active_panel.png"));
-                        	bottom.setIcon(new ImageIcon("src\\icons\\panel.png"));
+                        	top.setIcon(new ImageIcon(getClass().getResource("/icons/active_panel.png")));
+                        	bottom.setIcon(new ImageIcon(getClass().getResource("/icons/panel.png")));
                         }
                             
                         game.setSpace(focus.getX(),focus.getY());
@@ -829,8 +829,8 @@ class MenuDriver extends JFrame implements ActionListener
         	int repeatTimes = 10;
         	int delay = 75;
         	
-        	top.setIcon(new ImageIcon("src\\icons\\panel.png"));
-        	bottom.setIcon(new ImageIcon("src\\icons\\panel.png"));
+        	top.setIcon(new ImageIcon(getClass().getResource("/icons/panel.png")));
+        	bottom.setIcon(new ImageIcon(getClass().getResource("/icons/panel.png")));
         	
         	if(isSingleplayer && game.getWinner().contentEquals("Player 2"))
         		victorytext.setText("COMPUTER wins!");
