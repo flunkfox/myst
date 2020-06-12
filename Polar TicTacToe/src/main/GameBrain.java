@@ -302,8 +302,13 @@ public class GameBrain
         data[1]=score2;
         data[2]=gamesLeft;
         return data;
-        
     }
+    
+    public int getRemain()
+    {
+    	return gamesLeft;
+    }
+    
     public void setRemain(int charles)
     {
         gamesLeft= charles;
@@ -331,7 +336,6 @@ public class GameBrain
                     winner = "Player 2";
                 }
                 System.out.println(winner);
-                gamesLeft--;
                 return true;
             }
             else if(board[i][1]!=0&&board[i][1]==board[i][2]&&board[i][2]==board[i][3]&&board[i][3]==board[i][4])
@@ -346,7 +350,6 @@ public class GameBrain
                     winner = "Player 2";
                 }
                 System.out.println(winner);
-                gamesLeft--;
                 return true;
             }
            
@@ -361,7 +364,6 @@ public class GameBrain
                 if(board[k][i] != 0 && radialRecurse(board[k][i],k,i,1))
                 {
                     winner = ("Player " + board[k][i]);
-                    gamesLeft--;
                     return true;
                 }
             }
@@ -376,13 +378,11 @@ public class GameBrain
                 if(board[k][i] != 0 && rightDiagonalRecurse(board[k][i],k,i,1))
                 {
                     winner = ("Player " + board[k][i]);
-                    gamesLeft--;
                     return true;
                 }
                 if(board[k][i] != 0 && leftDiagonalRecurse(board[k][i],k,i,1))
                 {
                     winner = ("Player " + board[k][i]);
-                    gamesLeft--;
                     return true;
                 }
             }

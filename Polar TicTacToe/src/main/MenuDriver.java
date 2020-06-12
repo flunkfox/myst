@@ -15,7 +15,6 @@ class MenuDriver extends JFrame implements ActionListener
 	private GameBrain game;
 	
 	private int psize = 700;
-	private boolean debug = true;
 	private boolean isSingleplayer;
 	private boolean winMode = false;
 	private boolean gameoverMode = false;
@@ -34,6 +33,7 @@ class MenuDriver extends JFrame implements ActionListener
 	private JButton quit;
 	private JButton again;
 	private JButton bigquit;
+	private JSlider slider;
 	private JLabel pl2;
 	private JLabel pl4;
 	private JLabel sc1;
@@ -74,7 +74,6 @@ class MenuDriver extends JFrame implements ActionListener
 	cont.setLayout(card);
 	cont.add("menu", initMenu());
 	cont.add("submenu", initSubMenu());
-	//cont.add("gameover", initGameOver());
 	cont.add("game", initGame());
 	
 	add(cont);
@@ -238,8 +237,9 @@ class MenuDriver extends JFrame implements ActionListener
 		    	
 		    content.add(number);
 		    
-		    JSlider slider = new JSlider(1,15);
-		    	slider.setValue(3);
+		    slider = new JSlider(1,15);
+		    	slider.setValue(5);
+		    	game.setRemain(5);
 		    	slider.setMajorTickSpacing(2);
 		    	slider.setMinorTickSpacing(1);
 		    	slider.setPaintTicks(true);
@@ -401,7 +401,7 @@ class MenuDriver extends JFrame implements ActionListener
 				winner.setText(ultiwinner + " wins the tournament!");
 				winner.setHorizontalTextPosition(JLabel.CENTER);
 			  	winner.setForeground(Color.BLACK);
-			    winner.setFont(new Font("Gotham", Font.BOLD, 55));
+			    winner.setFont(new Font("Gotham", Font.BOLD, 49));
 			    winner.setAlignmentX(Component.CENTER_ALIGNMENT);
 			
 			JLabel score = new JLabel();
@@ -530,6 +530,7 @@ class MenuDriver extends JFrame implements ActionListener
         {
         	card.show(cont, "menu");
         	game.nuke();
+        	game.setRemain(5);
         	canvas.resetBoard();
         	canvas.updateScore();
         }
@@ -550,11 +551,19 @@ class MenuDriver extends JFrame implements ActionListener
         }
         if(j.equals(again))
         {
-        	
+        	card.show(cont, "menu");
+        	game.nuke();
+        	game.setRemain(5);
+        	slider.setValue(5);
+        	next.setText("Next Game");
+        	canvas.resetBoard();
+        	canvas.updateScore();
+        	winMode = false;
+        	gameoverMode = false;
         }
         if(j.equals(bigquit))
         {
-        	
+        	System.exit(0);
         }
 	}
 
@@ -749,10 +758,16 @@ class MenuDriver extends JFrame implements ActionListener
         
         public void displayWin()
         {
+        	if(getGamesRemaining() <= 0)
+        		endGame();
+        	
         	int repeatTimes = 10;
         	int delay = 75;
         	
-        	victorytext.setText(game.getWinner() + " wins!");
+        	if(isSingleplayer && game.getWinner().contentEquals("Player 2"))
+        		victorytext.setText("COMPUTER wins!");
+        	else
+        		victorytext.setText(game.getWinner() + " wins!");
         	next.setEnabled(true);
         	winMode = true;
         	displayWinMode = true;
@@ -777,26 +792,22 @@ class MenuDriver extends JFrame implements ActionListener
         
         public void endGame()
         {
-        	gameoverMode = true;
-        	cont.add("gameover", initGameOver());
+        	gameoverMode = true; 	
         	next.setText("Finish Game");  
         	String winner = null;
         	if(getPl1Score()==getPl2Score())
         		winner = "Nobody";
-        	if(getPl1Score()<getPl2Score())
+        	if(getPl1Score()<getPl2Score() && isSingleplayer)
+        		winner = "COMPUTER";
+        	if(getPl1Score()<getPl2Score() && !isSingleplayer)
         		winner = "Player 2";
         	if(getPl1Score()>getPl2Score())
         		winner = "Player 1";
         	ultiwinner = winner;
-        	
+        	cont.add("gameover", initGameOver());
         }
         public void checkWin()
         {
-            if(getGamesRemaining() <= 0)
-            {
-            	endGame();
-            	displayWin();
-            }
         	if(game.gameWin())
             {
             	System.out.println(game.getWinner());
