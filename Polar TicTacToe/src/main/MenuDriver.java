@@ -58,8 +58,8 @@ class MenuDriver extends JFrame implements ActionListener
 	
 	cont = new JPanel();
 	cont.setLayout(card);
-	//cont.add("menu", initMenu());
-	//cont.add("submenu", initSubMenu());
+	cont.add("menu", initMenu());
+	cont.add("submenu", initSubMenu());
 	cont.add("game", initGame());
 	
 	add(cont);
@@ -288,7 +288,12 @@ class MenuDriver extends JFrame implements ActionListener
         Game.add(hud);
         
         Box hudbuttons = Box.createVerticalBox();
-	    next = new JButton();
+        JLabel pl1 = new JLabel("Player 1");
+			pl1.setHorizontalTextPosition(JLabel.CENTER);
+			pl1.setForeground(Color.WHITE);
+			pl1.setFont(new Font("Rockwell", Font.PLAIN, 27));
+			pl1.setIcon(panel);
+        next = new JButton();
 		    next.setBorder(emptyBorder);
 		    next.setText("Next Game");
 		    next.setHorizontalTextPosition(JLabel.CENTER);
@@ -308,7 +313,11 @@ class MenuDriver extends JFrame implements ActionListener
 			quit.setRolloverIcon(pressed);
 			quit.setPressedIcon(clicked);
 			quit.addActionListener(this);
-		hudbuttons.add(Box.createRigidArea(new Dimension(0,600)));
+		hudbuttons.add(Box.createRigidArea(new Dimension(0,10)));
+		hudbuttons.add(pl1);
+		hudbuttons.add(Box.createRigidArea(new Dimension(0,40)));
+		hudbuttons.add(pl2);	
+		hudbuttons.add(Box.createRigidArea(new Dimension(0,480)));
 		hudbuttons.add(next);
 		hudbuttons.add(Box.createRigidArea(new Dimension(0,10)));
 		hudbuttons.add(quit);
@@ -350,6 +359,10 @@ class MenuDriver extends JFrame implements ActionListener
         	game.setUp();
         	card.show(cont, "game");
         	//System.out.println("Play button");
+        }
+        if(j.equals(quit))
+        {
+        	card.show(cont, "menu");
         }
 	}
 
