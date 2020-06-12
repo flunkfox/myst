@@ -536,24 +536,61 @@ class MenuDriver extends JFrame implements ActionListener
          * Could be replaced with setting the value of a JLabel, etc. */
         public void mousePressed(MouseEvent e) 
         {
-        	Point p = e.getPoint();
-            Hexashape focus = checkIfFramed(p);    	          
-            if(focus!=null && winMode == false)
-        	{
-        		//check is filled already
-        		if(!focus.isFilled())
-        		{
-        			if(game.whosTurn()==1)
-                		focus.setColor(player1color);
-                	else
-                		focus.setColor(player2color);
-        			game.setSpace(focus.getX(),focus.getY());
-        			flipFilled(focus);
-        		}
-        		repaint();
-        		//displayWin(cube[2][2]);
-        		checkWin();
-        	}	        	
+            if(isSingleplayer)
+            {
+                int r=0; int c=0;
+                Point p = e.getPoint();
+                Hexashape focus = checkIfFramed(p);               
+                if(focus!=null && winMode == false)
+                {
+                    //check is filled already
+                    if(!focus.isFilled())
+                    {
+                        focus.setColor(player1color);
+                        game.setSpace(focus.getX(),focus.getY());
+                        flipFilled(focus);
+                        repaint();
+                        //displayWin(cube[2][2]);
+                        if(game.gameWin())
+                        {
+                            checkWin();
+                        }
+                        else
+                        {    
+                            r=Integer.parseInt(game.compComp().substring(0,2));
+                            c=Integer.parseInt(game.compComp().substring(2));
+                            cube[r][c].setColor(player2color);
+                            cube[r][c].setFilled(true);
+                            repaint();
+                            checkWin();
+                            
+                        }
+                    }
+                    
+                }   
+            }
+            else
+            {
+                Point p = e.getPoint();
+                Hexashape focus = checkIfFramed(p);               
+                if(focus!=null && winMode == false)
+                {
+                    //check is filled already
+                    if(!focus.isFilled())
+                    {
+                        if(game.whosTurn()==1)
+                            focus.setColor(player1color);
+                        else
+                            focus.setColor(player2color);
+                        game.setSpace(focus.getX(),focus.getY());
+                        flipFilled(focus);
+                    }
+                    repaint();
+                    //displayWin(cube[2][2]);
+                    checkWin();
+                }   
+            }
+        	        	
         }
         
         public void displayWin()

@@ -241,8 +241,10 @@ public class GameBrain
     }
     
     //very intelligent AI that uses math.random to select a space to play in, if its not occupied - used for 1 player games
-    public void compComp()
+    public String compComp()
     {
+        int r = 0;
+        int c =0;
         boolean test = true;
         while(test = true)
         {
@@ -252,12 +254,13 @@ public class GameBrain
             {
                 test = false;
                 board[row][col]=2;
+                r=row;
+                c=col;
                 //player 2 to board[row][col]
             }
-           
                 
         }
-        
+        return(""+ r +","+ c);
         
     }
     public int whosTurn()
