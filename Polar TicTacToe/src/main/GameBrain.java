@@ -15,7 +15,7 @@ public class GameBrain
     private int score1 =0;
     private int score2 =0;
     private boolean singlePlayer;
-    
+    private int gamesLeft;
     //returns the value in the 2d array at a given space
     public int getBoardValue(int r, int c)
     {
@@ -95,6 +95,7 @@ public class GameBrain
                     score2++;
                 }
                 System.out.println(winner);
+                gamesLeft--;
                 return true;
             }
             else if(board[i][1]!=0&&board[i][1]==board[i][2]&&board[i][2]==board[i][3]&&board[i][3]==board[i][4])
@@ -111,6 +112,7 @@ public class GameBrain
                     score2++;
                 }
                 System.out.println(winner);
+                gamesLeft--;
                 return true;
             }
            
@@ -124,8 +126,13 @@ public class GameBrain
             {
             	if(board[k][i] != 0 && radialRecurse(board[k][i],k,i,1))
             	{
+            	    if(board[k][i]==1)
+            	        score1++;
+            	    else
+            	        score2++;
             		//win scenario
             		winner = ("Player: " + board[k][i]);
+            		gamesLeft--;
             		return true;
             	}
             }
@@ -139,15 +146,25 @@ public class GameBrain
             {
             	if(board[k][i] != 0 && rightDiagonalRecurse(board[k][i],k,i,1))
             	{
-            		//win scenario
-            		winner = ("Player: " + board[k][i]);
-            		return true;
+            	    if(board[k][i]==1)
+                        score1++;
+                    else
+                        score2++;
+                    //win scenario
+                    winner = ("Player: " + board[k][i]);
+                    gamesLeft--;
+                    return true;
             	}
             	if(board[k][i] != 0 && leftDiagonalRecurse(board[k][i],k,i,1))
             	{
-            		//win scenario
-            		winner = ("Player: " + board[k][i]);
-            		return true;
+            	    if(board[k][i]==1)
+                        score1++;
+                    else
+                        score2++;
+                    //win scenario
+                    winner = ("Player: " + board[k][i]);
+                    gamesLeft--;
+                    return true;
             	}
             }
         }
