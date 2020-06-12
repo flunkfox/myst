@@ -29,6 +29,8 @@ class MenuDriver extends JFrame implements ActionListener
 	private JButton quit;
 	private JLabel pl2;
 	private JLabel pl4;
+	private JLabel sc1;
+	private JLabel sc2;
 	
 	private Color player1color = Color.pink;
 	private Color player2color = Color.blue;
@@ -299,6 +301,18 @@ class MenuDriver extends JFrame implements ActionListener
 			pl4.setForeground(Color.WHITE);
 			pl4.setFont(new Font("Rockwell", Font.PLAIN, 27));
 			pl4.setIcon(panel);
+		JLabel score = new JLabel("SCORE");
+		    score.setHorizontalTextPosition(JLabel.CENTER);
+		    score.setForeground(Color.BLACK);
+		    score.setFont(new Font("Calibri", Font.BOLD, 27));
+		sc1 = new JLabel("0 Games Won");
+			sc1.setHorizontalTextPosition(JLabel.CENTER);
+			sc1.setForeground(Color.BLACK);
+			sc1.setFont(new Font("Calibri", Font.BOLD, 27));
+		sc2 = new JLabel("0 Games Won");
+			sc2.setHorizontalTextPosition(JLabel.CENTER);
+			sc2.setForeground(Color.BLACK);
+			sc2.setFont(new Font("Calibri", Font.BOLD, 27));
         next = new JButton();
 		    next.setBorder(emptyBorder);
 		    next.setText("Next Game");
@@ -320,10 +334,14 @@ class MenuDriver extends JFrame implements ActionListener
 			quit.setPressedIcon(clicked);
 			quit.addActionListener(this);
 		hudbuttons.add(Box.createRigidArea(new Dimension(0,10)));
+		hudbuttons.add(score);
+		hudbuttons.add(Box.createRigidArea(new Dimension(0,20)));
 		hudbuttons.add(pl3);
+		hudbuttons.add(sc1);
 		hudbuttons.add(Box.createRigidArea(new Dimension(0,40)));
-		hudbuttons.add(pl4);	
-		hudbuttons.add(Box.createRigidArea(new Dimension(0,480)));
+		hudbuttons.add(pl4);
+		hudbuttons.add(sc2);
+		hudbuttons.add(Box.createRigidArea(new Dimension(0,350)));
 		hudbuttons.add(next);
 		hudbuttons.add(Box.createRigidArea(new Dimension(0,10)));
 		hudbuttons.add(quit);
@@ -521,6 +539,7 @@ class MenuDriver extends JFrame implements ActionListener
         	
         	winMode = true;
         	displayWinMode = true;
+        	updateScore();
         	Timer timercasovac = new Timer(delay, new ActionListener() {
         	    private int counter;
 
@@ -546,6 +565,17 @@ class MenuDriver extends JFrame implements ActionListener
             	System.out.println(game.getWinner());
             	displayWin();
             }         		
+        }
+        
+        public void updateScore()
+        {
+        	int[] focus = game.getData();
+        	String score1 = focus[0] + " Games Won";
+        	String score2 = focus[1] + " Games Won";
+        	String remain = focus[2] + " Games Remaining";
+        	
+        	sc1.setText(score1);
+        	sc2.setText(score2);
         }
         
         public void resetBoard()
