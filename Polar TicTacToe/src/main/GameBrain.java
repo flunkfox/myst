@@ -307,7 +307,14 @@ public class GameBrain
     	else
     		return "null";
     }
-    
+    public int[] getData()
+    {
+        int[] data = new int[3];
+        data[0]=score1;
+        data[1]=score2;
+        data[2]=gamesLeft;
+        return data;
+    }
     /*public void setUpR()//sets up the board to test if the radial win check is working correctly
     {
         board[0][0]=2;
