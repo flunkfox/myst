@@ -391,7 +391,8 @@ class MenuDriver extends JFrame implements ActionListener
         if(j.equals(quit))
         {
         	card.show(cont, "menu");
-        	game.boardReset();
+        	game.nuke();
+        	canvas.resetBoard();
         }
         if(j.equals(next))
         {

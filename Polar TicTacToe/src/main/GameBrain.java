@@ -12,7 +12,7 @@ public class GameBrain
     private int[][] board = new int[6][5];
     private String winner;
     private int turn=1;
-    private int score1;
+    private int score1=0;
     private int score2 =0;
     private boolean singlePlayer;
     private int gamesLeft;
@@ -288,16 +288,14 @@ public class GameBrain
     }
     public void boardReset()
     {
-        if(gameWin()==true)
+        for(int i=0; i<board.length;i++)
         {
-            for(int i=0; i<board.length;i++)
+            for(int j=0; j<board[i].length;j++)
             {
-                for(int j=0; j<board[i].length;j++)
-                {
-                    board[i][j]=0;
-                }
+                board[i][j]=0;
             }
         }
+        
     }
     
     public String getWinner()
@@ -315,6 +313,17 @@ public class GameBrain
         data[2]=gamesLeft;
         return data;
         
+    }
+    public void setRemain(int charles)
+    {
+        gamesLeft= charles;
+    }
+    public void nuke()
+    {
+        boardReset();
+        score1=0;
+        score2=0;
+        gamesLeft=0;
     }
     /*public void setUpR()//sets up the board to test if the radial win check is working correctly
     {
