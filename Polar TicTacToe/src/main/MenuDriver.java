@@ -28,6 +28,7 @@ class MenuDriver extends JFrame implements ActionListener
 	private JButton next;
 	private JButton quit;
 	private JLabel pl2;
+	private JLabel pl4;
 	
 	private Color player1color = Color.pink;
 	private Color player2color = Color.blue;
@@ -293,9 +294,7 @@ class MenuDriver extends JFrame implements ActionListener
 			pl3.setForeground(Color.WHITE);
 			pl3.setFont(new Font("Rockwell", Font.PLAIN, 27));
 			pl3.setIcon(panel);
-	    JLabel pl4 = new JLabel("Player 2");
-			if(isSingleplayer)
-				pl4.setText("COMPUTER");
+	    pl4 = new JLabel("Player 2");
 	    	pl4.setHorizontalTextPosition(JLabel.CENTER);
 			pl4.setForeground(Color.WHITE);
 			pl4.setFont(new Font("Rockwell", Font.PLAIN, 27));
@@ -345,6 +344,7 @@ class MenuDriver extends JFrame implements ActionListener
         	game.setMode("singleplayer");
         	isSingleplayer = true;
         	pl2.setText("COMPUTER");
+        	pl4.setText("COMPUTER");
         	card.show(cont, "submenu");
         	//System.out.println("singleplayer button");
         }
@@ -353,6 +353,7 @@ class MenuDriver extends JFrame implements ActionListener
         	game.setMode("multiplayer");
         	isSingleplayer = false;
         	pl2.setText("Player 2");
+        	pl4.setText("Player 2");
         	card.show(cont, "submenu");
         	//System.out.println("multiplayer button");
         } 
