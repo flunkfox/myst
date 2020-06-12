@@ -412,6 +412,7 @@ class MenuDriver extends JFrame implements ActionListener
         	card.show(cont, "menu");
         	game.nuke();
         	canvas.resetBoard();
+        	canvas.updateScore();
         }
         if(j.equals(next))
         {
