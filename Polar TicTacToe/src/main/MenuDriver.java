@@ -553,8 +553,7 @@ class MenuDriver extends JFrame implements ActionListener
                         repaint();
                         //displayWin(cube[2][2]);
                         if(game.gameWin())
-                        {
-                            
+                        { 
                             checkWin();
                         }
                         else
@@ -564,6 +563,7 @@ class MenuDriver extends JFrame implements ActionListener
                             System.out.println(coords);
                             r=Integer.parseInt(coords.substring(0,1));
                             c=Integer.parseInt(coords.substring(2,3));
+                            //game.setSpace(r,c);
                             cube[r][c].setColor(player2color);
                             cube[r][c].setFilled(true);
                             repaint();

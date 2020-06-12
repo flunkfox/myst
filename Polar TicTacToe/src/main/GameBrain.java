@@ -246,7 +246,7 @@ public class GameBrain
         int r = 0;
         int c =0;
         boolean test = true;
-        while(test = true)
+        while(test == true)
         {
             int row = (int)(Math.random()*6);
             int col = (int)(Math.random()*5);
@@ -260,7 +260,6 @@ public class GameBrain
             }
                 
         }
-        
         return(""+ r +","+ c+".");
         
     }
