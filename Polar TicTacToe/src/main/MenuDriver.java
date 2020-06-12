@@ -18,11 +18,10 @@ class MenuDriver extends JFrame implements ActionListener
 	private boolean isSingleplayer;
 	private boolean winMode = false;
 	private boolean gameoverMode = false;
+	private int totalrounds;
 	private String ultiwinner;
-	private JLabel mouse;
 	private CardLayout card;
 	private JPanel cont;
-	private Hexashape[][] cube;
 	private Canvas canvas;
 
 	private JButton single;
@@ -35,11 +34,12 @@ class MenuDriver extends JFrame implements ActionListener
 	private JButton bigquit;
 	private JSlider slider;
 	private JLabel pl2;
-	private JLabel pl4;
+	private JLabel bottom;
 	private JLabel sc1;
 	private JLabel sc2;
 	private JLabel victorytext;
 	private JLabel remaininggames;
+	private JLabel top;
 	
 	private Color player1color = Color.pink;
 	private Color player2color = Color.blue;
@@ -62,8 +62,11 @@ class MenuDriver extends JFrame implements ActionListener
 	public MenuDriver(GameBrain newgame)
 	{
 	game = newgame;
-		
-	setTitle("Prototype Menu");
+	
+	Image icon = Toolkit.getDefaultToolkit().getImage("src\\icons\\icon.png");
+    setIconImage(icon);
+	
+	setTitle("POLAR TIC-TAC-TOE - by sam and alex!");
 	setLocationRelativeTo(null);
 	setDefaultCloseOperation(EXIT_ON_CLOSE);
 	setResizable(false);
@@ -120,7 +123,7 @@ class MenuDriver extends JFrame implements ActionListener
 						multi.setRolloverIcon(pressed);
 						multi.setPressedIcon(clicked);
 						multi.addActionListener(this);
-			buttons.add(Box.createRigidArea(new Dimension(0,300)));
+			buttons.add(Box.createRigidArea(new Dimension(0,400)));
 			buttons.add(single);
 			buttons.add(Box.createRigidArea(new Dimension(0,40)));
 			buttons.add(multi);
@@ -162,67 +165,69 @@ class MenuDriver extends JFrame implements ActionListener
 					pl2.setForeground(Color.WHITE);
 					pl2.setFont(new Font("Rockwell", Font.PLAIN, 27));
 					pl2.setIcon(panel);
-				JLabel pl3 = new JLabel("VS");
-					pl3.setHorizontalTextPosition(JLabel.CENTER);
-					pl3.setForeground(Color.WHITE);
-					pl3.setFont(new Font("Rockwell", Font.BOLD, 20));
+				JLabel top = new JLabel("VS");
+					top.setHorizontalTextPosition(JLabel.CENTER);
+					top.setForeground(Color.WHITE);
+					top.setFont(new Font("Rockwell", Font.BOLD, 20));
 				b1.add(pl1);
 				b1.add(Box.createRigidArea(new Dimension(30,0)));
-				b1.add(pl3);
+				b1.add(top);
 				b1.add(Box.createRigidArea(new Dimension(30,0)));
 				b1.add(pl2);
 			content.add(b1);
 			content.add(Box.createRigidArea(new Dimension(0,30)));
 			
 			Box b2 = Box.createHorizontalBox();
-				JLabel colour = new JLabel("avatar color");
+				JLabel colour = new JLabel("Color");
 				colour.setHorizontalTextPosition(JLabel.CENTER);
-				colour.setForeground(Color.BLACK);
-				colour.setFont(new Font("Rockwell", Font.BOLD, 20));
+				colour.setForeground(Color.WHITE);
+				colour.setFont(new Font("Rockwell", Font.ITALIC, 20));
 			
 			Box leftbutton = Box.createHorizontalBox();
 			    //Create the radio buttons.
-			    JRadioButton redbut = new JRadioButton("Red");
-			    	//birdButton.setActionCommand(birdString);
-			    redbut.setSelected(true);
-			    JRadioButton bluebut = new JRadioButton("Blue");
-			    	//catButton.setActionCommand(catString);
-			    JRadioButton greenbut = new JRadioButton("Green");
-			    	//dogButton.setActionCommand(dogString);
+			    JRadioButton pinkbut1 = new JRadioButton("Pink");
+			    	pinkbut1.setActionCommand("pb1");
+			    pinkbut1.setSelected(true);
+			    JRadioButton orangebut1 = new JRadioButton("Orange");
+			    	orangebut1.setActionCommand("ob1");
+			    JRadioButton bluebut1 = new JRadioButton("Blue");
+			    	bluebut1.setActionCommand("bb1");
 			    //Group the radio buttons.
 			    ButtonGroup group = new ButtonGroup();
-			    group.add(redbut);
-			    group.add(bluebut);
-			    group.add(greenbut);
+			    group.add(pinkbut1);
+			    group.add(orangebut1);
+			    group.add(bluebut1);
 			    //Register a listener for the radio buttons.
-			    redbut.addActionListener(this);
-			    bluebut.addActionListener(this);
-			    greenbut.addActionListener(this);
-			    leftbutton.add(redbut);
-			    leftbutton.add(bluebut);
-			    leftbutton.add(greenbut);
+			    RadioListener myListener = new RadioListener();
+			    pinkbut1.addActionListener(myListener);
+			    orangebut1.addActionListener(myListener);
+			    bluebut1.addActionListener(myListener);
+			    leftbutton.add(pinkbut1);
+			    leftbutton.add(orangebut1);
+			    leftbutton.add(bluebut1);
 				
 				Box rightbutton = Box.createHorizontalBox();
 			    //Create the radio buttons.
-			    JRadioButton redbut1 = new JRadioButton("Red");
-			    	//birdButton.setActionCommand(birdString);
-			    redbut1.setSelected(true);
-			    JRadioButton bluebut1 = new JRadioButton("Blue");
-			    	//catButton.setActionCommand(catString);
-			    JRadioButton greenbut1 = new JRadioButton("Green");
-			    	//dogButton.setActionCommand(dogString);
+			    JRadioButton pinkbut2 = new JRadioButton("Pink");
+			    	pinkbut2.setActionCommand("pb2");
+			    JRadioButton orangebut2 = new JRadioButton("Orange");
+			    	orangebut2.setActionCommand("ob2");
+			    JRadioButton bluebut2 = new JRadioButton("Blue");
+			    	bluebut2.setSelected(true);
+			    	bluebut2.setActionCommand("bb2");
 			    //Group the radio buttons.
 			    ButtonGroup group1 = new ButtonGroup();
-			    group1.add(redbut1);
-			    group1.add(bluebut1);
-			    group1.add(greenbut1);
+			    group1.add(pinkbut2);
+			    group1.add(orangebut2);
+			    group1.add(bluebut2);
 			    //Register a listener for the radio buttons.
-			    redbut1.addActionListener(this);
-			    bluebut1.addActionListener(this);
-			    greenbut1.addActionListener(this);
-			    rightbutton.add(redbut1);
-			    rightbutton.add(bluebut1);
-			    rightbutton.add(greenbut1);		
+			    pinkbut2.addActionListener(myListener);
+			    orangebut2.addActionListener(myListener);
+			    bluebut2.addActionListener(myListener);
+			   
+			    rightbutton.add(pinkbut2);
+			    rightbutton.add(orangebut2);
+			    rightbutton.add(bluebut2);		
 		    b2.add(leftbutton);
 		    b2.add(Box.createRigidArea(new Dimension(30,0)));
 		    b2.add(colour);
@@ -233,6 +238,8 @@ class MenuDriver extends JFrame implements ActionListener
 		    
 		    Box number = Box.createHorizontalBox();
 		    	JLabel numberofgames = new JLabel("Number of games");
+		    	numberofgames.setForeground(Color.WHITE);
+		    	numberofgames.setFont(new Font("Rockwell", Font.ITALIC, 20));
 		    	number.add(numberofgames);
 		    	
 		    content.add(number);
@@ -311,16 +318,16 @@ class MenuDriver extends JFrame implements ActionListener
         Game.add(hud);
         
         Box hudbuttons = Box.createVerticalBox();
-        JLabel pl3 = new JLabel("Player 1");
-			pl3.setHorizontalTextPosition(JLabel.CENTER);
-			pl3.setForeground(Color.WHITE);
-			pl3.setFont(new Font("Rockwell", Font.PLAIN, 27));
-			pl3.setIcon(panel);
-	    pl4 = new JLabel("Player 2");
-	    	pl4.setHorizontalTextPosition(JLabel.CENTER);
-			pl4.setForeground(Color.WHITE);
-			pl4.setFont(new Font("Rockwell", Font.PLAIN, 27));
-			pl4.setIcon(panel);
+        top = new JLabel("Player 1");
+			top.setHorizontalTextPosition(JLabel.CENTER);
+			top.setForeground(Color.WHITE);
+			top.setFont(new Font("Rockwell", Font.PLAIN, 27));
+			top.setIcon(panel);
+	    bottom = new JLabel("Player 2");
+	    	bottom.setHorizontalTextPosition(JLabel.CENTER);
+			bottom.setForeground(Color.WHITE);
+			bottom.setFont(new Font("Rockwell", Font.PLAIN, 27));
+			bottom.setIcon(panel);
 		JLabel score = new JLabel("SCORE");
 		    score.setHorizontalTextPosition(JLabel.CENTER);
 		    score.setForeground(Color.BLACK);
@@ -337,6 +344,10 @@ class MenuDriver extends JFrame implements ActionListener
 			victorytext.setHorizontalTextPosition(JLabel.CENTER);
 			victorytext.setForeground(Color.BLACK);
 			victorytext.setFont(new Font("Calibri", Font.BOLD, 27));
+		remaininggames = new JLabel();
+			remaininggames.setHorizontalTextPosition(JLabel.CENTER);
+			remaininggames.setForeground(Color.BLACK);
+			remaininggames.setFont(new Font("Calibri", Font.BOLD, 27));
         next = new JButton();
 		    next.setBorder(emptyBorder);
 		    next.setText("Next Game");
@@ -361,18 +372,19 @@ class MenuDriver extends JFrame implements ActionListener
 		hudbuttons.add(Box.createRigidArea(new Dimension(0,10)));
 		hudbuttons.add(score);
 		hudbuttons.add(Box.createRigidArea(new Dimension(0,20)));
-		hudbuttons.add(pl3);
+		hudbuttons.add(top);
 		hudbuttons.add(sc1);
 		hudbuttons.add(Box.createRigidArea(new Dimension(0,40)));
-		hudbuttons.add(pl4);
+		hudbuttons.add(bottom);
 		hudbuttons.add(sc2);
 		hudbuttons.add(Box.createRigidArea(new Dimension(0,10)));
 		hudbuttons.add(victorytext);
-		hudbuttons.add(Box.createRigidArea(new Dimension(0,300)));
+		hudbuttons.add(Box.createRigidArea(new Dimension(0,270)));
+		hudbuttons.add(remaininggames);
+		hudbuttons.add(Box.createRigidArea(new Dimension(0,10)));
 		hudbuttons.add(next);
 		hudbuttons.add(Box.createRigidArea(new Dimension(0,10)));
 		hudbuttons.add(quit);
-		//hud.add(Box.createRigidArea(new Dimension(0,600)));
 		hud.add(hudbuttons);
 		
         return Game;
@@ -381,7 +393,17 @@ class MenuDriver extends JFrame implements ActionListener
 	public JPanel initGameOver()
 	{
 		JLabel background=new JLabel(new ImageIcon("src\\icons\\test2.png"));
-		ImageIcon button = new ImageIcon("src\\icons\\button.png");
+		
+		if(getPl1Score()==getPl2Score())
+    		ultiwinner = "Nobody";
+    	if(getPl1Score()<getPl2Score() && isSingleplayer)
+    		background.setIcon(new ImageIcon("src\\icons\\computer_final.png"));
+    	if(getPl1Score()<getPl2Score() && !isSingleplayer)
+    		background.setIcon(new ImageIcon("src\\icons\\player2_final.png"));
+    	if(getPl1Score()>getPl2Score())
+    		background.setIcon(new ImageIcon("src\\icons\\player1_final.png"));
+		
+    	ImageIcon button = new ImageIcon("src\\icons\\button.png");
 		ImageIcon pressed = new ImageIcon("src\\icons\\button_press.png");
 		ImageIcon clicked = new ImageIcon("src\\icons\\light_button_press.png");
 		ImageIcon panel = new ImageIcon("src\\icons\\panel.png");
@@ -400,7 +422,7 @@ class MenuDriver extends JFrame implements ActionListener
 			JLabel winner = new JLabel();
 				winner.setText(ultiwinner + " wins the tournament!");
 				winner.setHorizontalTextPosition(JLabel.CENTER);
-			  	winner.setForeground(Color.BLACK);
+			  	winner.setForeground(Color.WHITE);
 			    winner.setFont(new Font("Gotham", Font.BOLD, 49));
 			    winner.setAlignmentX(Component.CENTER_ALIGNMENT);
 			
@@ -414,20 +436,20 @@ class MenuDriver extends JFrame implements ActionListener
 			Box scorelist = Box.createHorizontalBox();
 				JLabel score1 = new JLabel(getPl1Score() + " Wins");
 					score1.setHorizontalTextPosition(JLabel.CENTER);
-					score1.setForeground(Color.BLACK);
+					score1.setForeground(Color.WHITE);
 					score1.setFont(new Font("Arial", Font.BOLD, 27));
 				JLabel score2 = new JLabel(getPl2Score() + " Wins");
 					score2.setHorizontalTextPosition(JLabel.CENTER);
-					score2.setForeground(Color.BLACK);
+					score2.setForeground(Color.WHITE);
 					score2.setFont(new Font("Arial", Font.BOLD, 27));
-				JLabel pl3 = new JLabel("vs");
-					pl3.setHorizontalTextPosition(JLabel.CENTER);
-					pl3.setForeground(Color.BLACK);
-					pl3.setFont(new Font("Arial", Font.BOLD, 20));
-					pl3.setAlignmentX(Component.CENTER_ALIGNMENT);
+				JLabel top = new JLabel("vs");
+					top.setHorizontalTextPosition(JLabel.CENTER);
+					top.setForeground(Color.WHITE);
+					top.setFont(new Font("Arial", Font.BOLD, 25));
+					top.setAlignmentX(Component.CENTER_ALIGNMENT);
 			scorelist.add(score1);
 			scorelist.add(Box.createRigidArea(new Dimension(115,0)));
-			scorelist.add(pl3);
+			scorelist.add(top);
 			scorelist.add(Box.createRigidArea(new Dimension(115,0)));
 			scorelist.add(score2);
 			scorelist.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -476,13 +498,19 @@ class MenuDriver extends JFrame implements ActionListener
 			buttons.add(Box.createRigidArea(new Dimension(0,40)));
 			buttons.add(bigquit);
 			buttons.setAlignmentX(Component.CENTER_ALIGNMENT);
-		content.add(winner);
-		content.add(Box.createRigidArea(new Dimension(0,110)));
+		
+		if(ultiwinner!=null)
+		{
+			content.add(winner);
+			content.add(Box.createRigidArea(new Dimension(0,110)));
+		}
+		else
+			content.add(Box.createRigidArea(new Dimension(0,210)));
 		content.add(score);
 		//content.add(Box.createRigidArea(new Dimension(0,10)));
 		content.add(labels);
 		content.add(scorelist);
-		content.add(Box.createRigidArea(new Dimension(0,125)));
+		content.add(Box.createRigidArea(new Dimension(0,85)));
 		content.add(buttons);
 
 		background.add(content);
@@ -501,7 +529,7 @@ class MenuDriver extends JFrame implements ActionListener
         	game.setMode("singleplayer");
         	isSingleplayer = true;
         	pl2.setText("COMPUTER");
-        	pl4.setText("COMPUTER");
+        	bottom.setText("COMPUTER");
         	card.show(cont, "submenu");
         	//System.out.println("singleplayer button");
         }
@@ -510,7 +538,7 @@ class MenuDriver extends JFrame implements ActionListener
         	game.setMode("multiplayer");
         	isSingleplayer = false;
         	pl2.setText("Player 2");
-        	pl4.setText("Player 2");
+        	bottom.setText("Player 2");
         	card.show(cont, "submenu");
         	//System.out.println("multiplayer button");
         } 
@@ -523,16 +551,29 @@ class MenuDriver extends JFrame implements ActionListener
         {
         	game.setUp();
         	card.show(cont, "game");
+        	totalrounds = game.getData()[2];
+        	int r = totalrounds - (game.getData()[2]-1);
+        	remaininggames.setText("Round " + r +" of " + totalrounds);
         	System.out.println("Games Remaining: " + game.getData()[2]);
-        	//System.out.println("Play button");
+        	 if(game.whosTurn()==1)
+	            {
+	             	top.setIcon(new ImageIcon("src\\icons\\active_panel.png"));
+	            } 
+	             else
+	             {
+	             	bottom.setIcon(new ImageIcon("src\\icons\\active_panel.png"));
+	             }
         }
         if(j.equals(quit))
         {
         	card.show(cont, "menu");
         	game.nuke();
         	game.setRemain(5);
+        	slider.setValue(5);
         	canvas.resetBoard();
         	canvas.updateScore();
+        	top.setIcon(new ImageIcon("src\\icons\\panel.png"));
+        	bottom.setIcon(new ImageIcon("src\\icons\\panel.png"));
         }
         if(j.equals(next))
         {
@@ -545,7 +586,21 @@ class MenuDriver extends JFrame implements ActionListener
             else
             {
                 game.boardReset();
-           	    canvas.resetBoard(); 	
+           	    canvas.resetBoard();
+           	    int rounds = totalrounds - (game.getData()[2]-1);
+           	    if(rounds >= totalrounds)
+           	    	remaininggames.setText("Last round!");
+           	    else
+           	    	remaininggames.setText("Round " + rounds +" of " + totalrounds);
+	           	 
+           	    if(game.whosTurn()==1)
+	            {
+	             	top.setIcon(new ImageIcon("src\\icons\\active_panel.png"));
+	            } 
+	             else
+	             {
+	             	bottom.setIcon(new ImageIcon("src\\icons\\active_panel.png"));
+	             }
             }
 
         }
@@ -742,14 +797,22 @@ class MenuDriver extends JFrame implements ActionListener
                     if(!focus.isFilled())
                     {
                         if(game.whosTurn()==1)
-                            focus.setColor(player1color);
+                        {
+                        	focus.setColor(player1color);
+                        	top.setIcon(new ImageIcon("src\\icons\\panel.png"));
+                        	bottom.setIcon(new ImageIcon("src\\icons\\active_panel.png"));
+                        } 
                         else
-                            focus.setColor(player2color);
+                        {
+                        	focus.setColor(player2color);
+                        	top.setIcon(new ImageIcon("src\\icons\\active_panel.png"));
+                        	bottom.setIcon(new ImageIcon("src\\icons\\panel.png"));
+                        }
+                            
                         game.setSpace(focus.getX(),focus.getY());
                         flipFilled(focus);
                     }
                     repaint();
-                    //displayWin(cube[2][2]);
                     checkWin();
                 }   
             }
@@ -763,6 +826,9 @@ class MenuDriver extends JFrame implements ActionListener
         	
         	int repeatTimes = 10;
         	int delay = 75;
+        	
+        	top.setIcon(new ImageIcon("src\\icons\\panel.png"));
+        	bottom.setIcon(new ImageIcon("src\\icons\\panel.png"));
         	
         	if(isSingleplayer && game.getWinner().contentEquals("Player 2"))
         		victorytext.setText("COMPUTER wins!");
@@ -794,15 +860,10 @@ class MenuDriver extends JFrame implements ActionListener
         {
         	gameoverMode = true; 	
         	next.setText("Finish Game");  
+        	int win;
         	String winner = null;
         	if(getPl1Score()==getPl2Score())
         		winner = "Nobody";
-        	if(getPl1Score()<getPl2Score() && isSingleplayer)
-        		winner = "COMPUTER";
-        	if(getPl1Score()<getPl2Score() && !isSingleplayer)
-        		winner = "Player 2";
-        	if(getPl1Score()>getPl2Score())
-        		winner = "Player 1";
         	ultiwinner = winner;
         	cont.add("gameover", initGameOver());
         }
@@ -923,4 +984,37 @@ class MenuDriver extends JFrame implements ActionListener
     	repaint();
         }
     }
+	//this special class exists just to listen for input coming
+	//from the six radio buttons that determine player color.
+	class RadioListener implements ActionListener
+	{
+	    public void actionPerformed(ActionEvent e) 
+	    {
+	        String r = e.getActionCommand();
+	    	if(r.equals("pb1"))
+	        {
+	    		player1color=Color.pink;
+	        }
+	    	if(r.equals("ob1"))
+	        {
+	    		player1color=Color.orange;
+	        }
+	    	if(r.equals("bb1"))
+	        {
+	    		player1color=Color.blue;
+	        }
+	    	if(r.equals("pb2"))
+	        {
+	    		player2color=Color.pink;
+	        }
+	    	if(r.equals("ob2"))
+	        {
+	    		player2color=Color.orange;
+	        }
+	    	if(r.equals("bb2"))
+	        {
+	    		player2color=Color.blue;
+	        }
+	    }
+	}
 }
