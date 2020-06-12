@@ -30,6 +30,8 @@ class MenuDriver extends JFrame implements ActionListener
 	private JButton play;
 	private JButton next;
 	private JButton quit;
+	private JButton again;
+	private JButton bigquit;
 	private JLabel pl2;
 	private JLabel pl4;
 	private JLabel sc1;
@@ -66,9 +68,10 @@ class MenuDriver extends JFrame implements ActionListener
 	
 	cont = new JPanel();
 	cont.setLayout(card);
-	cont.add("menu", initMenu());
-	cont.add("submenu", initSubMenu());
-	cont.add("game", initGame());
+	//cont.add("menu", initMenu());
+	//cont.add("submenu", initSubMenu());
+	//cont.add("game", initGame());
+	cont.add("gameover", initGameOver());
 	
 	add(cont);
 	setVisible(true);
@@ -371,6 +374,57 @@ class MenuDriver extends JFrame implements ActionListener
         return Game;
 	}
  	
+	public JPanel initGameOver()
+	{
+		JLabel background=new JLabel(new ImageIcon("src\\icons\\test2.png"));
+		ImageIcon button = new ImageIcon("src\\icons\\button.png");
+		ImageIcon pressed = new ImageIcon("src\\icons\\button_press.png");
+		ImageIcon clicked = new ImageIcon("src\\icons\\light_button_press.png");
+		
+		GameOver = new JPanel();
+			GameOver.setPreferredSize(new Dimension(psize+200, psize));
+			GameOver.setLayout(new BorderLayout());
+			GameOver.add(background);
+		
+		background.setLayout(new GridBagLayout());
+		JPanel content = new JPanel(); 
+			content.setLayout(new BoxLayout(content, BoxLayout.Y_AXIS));
+			content.setOpaque(true);
+			content.setBackground(new Color(0,0,0,0));
+			
+			Box buttons = Box.createVerticalBox();
+				again = new JButton();
+					Border emptyBorder = BorderFactory.createEmptyBorder();
+					again.setBorder(emptyBorder);
+					again.setText("Play Again!");
+						again.setHorizontalTextPosition(JLabel.CENTER);
+						again.setForeground(Color.WHITE);
+						again.setFont(new Font("Rockwell", Font.PLAIN, 37));
+						again.setIcon(button);
+						again.setRolloverIcon(pressed);
+						again.setPressedIcon(clicked);
+						again.addActionListener(this);	
+				bigquit = new JButton("Multiplayer");
+					bigquit.setBorder(emptyBorder);
+					bigquit.setText("Exit Game");
+						bigquit.setHorizontalTextPosition(JLabel.CENTER);
+						bigquit.setForeground(Color.WHITE);
+						bigquit.setFont(new Font("Rockwell", Font.PLAIN, 37));
+						bigquit.setIcon(button);
+						bigquit.setRolloverIcon(pressed);
+						bigquit.setPressedIcon(clicked);
+						bigquit.addActionListener(this);
+			buttons.add(again);
+			buttons.add(Box.createRigidArea(new Dimension(0,40)));
+			buttons.add(bigquit);
+			buttons.add(Box.createRigidArea(new Dimension(0,300)));
+			
+		content.add(buttons);
+		background.add(content);
+		GameOver.setVisible(true);
+		return GameOver;
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent e) 
 	{
