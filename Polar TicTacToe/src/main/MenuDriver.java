@@ -20,6 +20,7 @@ class MenuDriver extends JFrame implements ActionListener
 	private CardLayout card;
 	private JPanel cont;
 	private Hexashape[][] cube;
+	private Canvas canvas;
 
 	private JButton single;
 	private JButton multi;
@@ -287,7 +288,8 @@ class MenuDriver extends JFrame implements ActionListener
 		hud = new JPanel();
         hud.setBackground(Color.pink);
         hud.setPreferredSize(new Dimension(200,psize));
-        Game.add(new Canvas());
+        canvas = new Canvas();
+        Game.add(canvas);
         Game.add(hud);
         
         Box hudbuttons = Box.createVerticalBox();
@@ -389,10 +391,12 @@ class MenuDriver extends JFrame implements ActionListener
         if(j.equals(quit))
         {
         	card.show(cont, "menu");
+        	game.boardReset();
         }
         if(j.equals(next))
         {
             game.boardReset();
+            canvas.resetBoard();
             int[] focus = game.getData();
             
         }
@@ -578,9 +582,9 @@ class MenuDriver extends JFrame implements ActionListener
         	sc2.setText(score2);
         }
         
-        public void resetBoard()
+        public void setDWinMode(boolean b)
         {
-        	
+        	displayWinMode = b;
         }
         
         public void setCubePlots()
@@ -652,5 +656,22 @@ class MenuDriver extends JFrame implements ActionListener
         public void mouseEntered(MouseEvent e) {}
         public void mouseExited(MouseEvent e) {}
         public void mouseClicked(MouseEvent e) {}
+        
+        public void resetBoard()
+        {
+	    	//turn win mode off
+	    	winMode = false;
+	    	//turn display win mode off
+	    	setDWinMode(false);
+	    	//set all hexashapes to not filled
+	    	for(int i = 0; i<6; i++)
+	    	{
+	    		for(int k = 0; k<5; k++)
+	    		{
+	    			cube[i][k].setFilled(false);
+	    		}
+	    	}
+    	repaint();
+        }
     }
 }
