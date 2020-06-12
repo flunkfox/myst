@@ -294,7 +294,9 @@ class MenuDriver extends JFrame implements ActionListener
 			pl3.setFont(new Font("Rockwell", Font.PLAIN, 27));
 			pl3.setIcon(panel);
 	    JLabel pl4 = new JLabel("Player 2");
-			pl4.setHorizontalTextPosition(JLabel.CENTER);
+			if(isSingleplayer)
+				pl4.setText("COMPUTER");
+	    	pl4.setHorizontalTextPosition(JLabel.CENTER);
 			pl4.setForeground(Color.WHITE);
 			pl4.setFont(new Font("Rockwell", Font.PLAIN, 27));
 			pl4.setIcon(panel);
