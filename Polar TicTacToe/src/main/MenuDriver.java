@@ -372,6 +372,12 @@ class MenuDriver extends JFrame implements ActionListener
         {
         	card.show(cont, "menu");
         }
+        if(j.equals(next))
+        {
+            game.boardReset();
+            int[] focus = game.getData();
+            
+        }
 	}
 
 	
