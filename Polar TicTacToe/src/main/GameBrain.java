@@ -319,6 +319,7 @@ public class GameBrain
         score1=0;
         score2=0;
         gamesLeft=0;
+        turn=1;
     }
     public boolean gameWin2()
     {
