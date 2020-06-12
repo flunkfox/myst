@@ -126,12 +126,11 @@ public class GameBrain
             {
             	if(board[k][i] != 0 && radialRecurse(board[k][i],k,i,1))
             	{
-            	    if(board[k][i]==1)
-            	        score1++;
-            	    else
-            	        score2++;
-            		//win scenario
             		winner = ("Player " + board[k][i]);
+            		if(board[k][i]==1)
+            		    score1++;
+            		else
+            		    score2++;
             		gamesLeft--;
             		return true;
             	}
@@ -146,23 +145,21 @@ public class GameBrain
             {
             	if(board[k][i] != 0 && rightDiagonalRecurse(board[k][i],k,i,1))
             	{
-            	    if(board[k][i]==1)
+                    winner = ("Player " + board[k][i]);
+                    if(board[k][i]==1)
                         score1++;
                     else
                         score2++;
-                    //win scenario
-                    winner = ("Player " + board[k][i]);
                     gamesLeft--;
                     return true;
             	}
             	if(board[k][i] != 0 && leftDiagonalRecurse(board[k][i],k,i,1))
             	{
-            	    if(board[k][i]==1)
+                    winner = ("Player " + board[k][i]);
+                    if(board[k][i]==1)
                         score1++;
                     else
                         score2++;
-                    //win scenario
-                    winner = ("Player: " + board[k][i]);
                     gamesLeft--;
                     return true;
             	}
@@ -226,7 +223,7 @@ public class GameBrain
     	return false;
     }
     
-        
+
         
     //pre: int x and int y are variables representing the row and column in the array that the current player has selected to play at
     //post: returns true if the selected space is unoccupied, false if the space is occupied
@@ -256,6 +253,7 @@ public class GameBrain
                 board[row][col]=2;
                 r=row;
                 c=col;
+                turn++;
                 //player 2 to board[row][col]
             }
                 
@@ -263,32 +261,19 @@ public class GameBrain
         return(""+ r +","+ c+".");
         
     }
+
     public int whosTurn()
     {
-        if(singlePlayer==true)
+        if(turn%2==0)
         {
-            if(turn%2==0)
-            {
-                compComp();
-                return 2;
-            }
-            else
-            {
-                return 1;
-            }
+            return 2;
         }
         else
         {
-            if(turn%2==0)
-            {
-                return 2;
-            }
-            else
-            {
-                return 1;
-            }
-        }   
+            return 1;
+        }
     }
+    
     public void boardReset()
     {
         for(int i=0; i<board.length;i++)
@@ -298,6 +283,8 @@ public class GameBrain
                 board[i][j]=0;
             }
         }
+        if(singlePlayer)
+            turn=1;
         
     }
     
@@ -327,6 +314,81 @@ public class GameBrain
         score1=0;
         score2=0;
         gamesLeft=0;
+    }
+    public boolean gameWin2()
+    {
+        //this piece of gameWin checks to see if there is a current linear victory on the board, and records which player won
+        for(int i=0; i<board.length;i++)
+        {
+            if(board[i][0]!=0&&board[i][0]==board[i][1]&&board[i][2]==board[i][1]&&board[i][2]==board[i][3])
+            {
+                if(board[i][0]==1)
+                {
+                    winner = "Player 1";
+                }
+                else
+                {
+                    winner = "Player 2";
+                }
+                System.out.println(winner);
+                gamesLeft--;
+                return true;
+            }
+            else if(board[i][1]!=0&&board[i][1]==board[i][2]&&board[i][2]==board[i][3]&&board[i][3]==board[i][4])
+            {
+                if(board[i][1]==1)
+                {
+                    winner = "Player 1";
+                }
+                    
+                else    
+                {
+                    winner = "Player 2";
+                }
+                System.out.println(winner);
+                gamesLeft--;
+                return true;
+            }
+           
+            
+            
+        }
+        //This section of gameWin checks the board to see if there is a current radial victory, and it records who won
+        for(int i = 0; i < board[0].length; i++)
+        {
+            for(int k = 0; k < board.length; k++)
+            {
+                if(board[k][i] != 0 && radialRecurse(board[k][i],k,i,1))
+                {
+                    winner = ("Player " + board[k][i]);
+                    gamesLeft--;
+                    return true;
+                }
+            }
+        }
+        
+        
+        //This section of gameWin will check to see if there is a current diagonal win on the board and records the winner
+        for(int i = 0; i < board[0].length ; i++)
+        {
+            for(int k = 0; k < board.length; k++)
+            {
+                if(board[k][i] != 0 && rightDiagonalRecurse(board[k][i],k,i,1))
+                {
+                    winner = ("Player " + board[k][i]);
+                    gamesLeft--;
+                    return true;
+                }
+                if(board[k][i] != 0 && leftDiagonalRecurse(board[k][i],k,i,1))
+                {
+                    winner = ("Player " + board[k][i]);
+                    gamesLeft--;
+                    return true;
+                }
+            }
+        }
+        return false;
+        
     }
     /*public void setUpR()//sets up the board to test if the radial win check is working correctly
     {

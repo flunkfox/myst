@@ -552,7 +552,7 @@ class MenuDriver extends JFrame implements ActionListener
                         flipFilled(focus);
                         repaint();
                         //displayWin(cube[2][2]);
-                        if(game.gameWin())
+                        if(game.gameWin2())
                         { 
                             checkWin();
                         }
