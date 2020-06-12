@@ -260,7 +260,8 @@ public class GameBrain
             }
                 
         }
-        return(""+ r +","+ c);
+        
+        return(""+ r +","+ c+".");
         
     }
     public int whosTurn()

@@ -539,6 +539,7 @@ class MenuDriver extends JFrame implements ActionListener
             if(isSingleplayer)
             {
                 int r=0; int c=0;
+                String coords;
                 Point p = e.getPoint();
                 Hexashape focus = checkIfFramed(p);               
                 if(focus!=null && winMode == false)
@@ -553,12 +554,16 @@ class MenuDriver extends JFrame implements ActionListener
                         //displayWin(cube[2][2]);
                         if(game.gameWin())
                         {
+                            
                             checkWin();
                         }
                         else
                         {    
-                            r=Integer.parseInt(game.compComp().substring(0,2));
-                            c=Integer.parseInt(game.compComp().substring(2));
+                            
+                            coords=game.compComp();
+                            System.out.println(coords);
+                            r=Integer.parseInt(coords.substring(0,1));
+                            c=Integer.parseInt(coords.substring(2,3));
                             cube[r][c].setColor(player2color);
                             cube[r][c].setFilled(true);
                             repaint();
