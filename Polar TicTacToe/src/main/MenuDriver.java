@@ -18,6 +18,8 @@ class MenuDriver extends JFrame implements ActionListener
 	private boolean debug = true;
 	private boolean isSingleplayer;
 	private boolean winMode = false;
+	private boolean gameoverMode = false;
+	private String ultiwinner;
 	private JLabel mouse;
 	private CardLayout card;
 	private JPanel cont;
@@ -30,12 +32,14 @@ class MenuDriver extends JFrame implements ActionListener
 	private JButton play;
 	private JButton next;
 	private JButton quit;
+	private JButton again;
+	private JButton bigquit;
 	private JLabel pl2;
 	private JLabel pl4;
 	private JLabel sc1;
 	private JLabel sc2;
-	private JLabel remaining;
-	private JLabel winmessage;
+	private JLabel victorytext;
+	private JLabel remaininggames;
 	
 	private Color player1color = Color.pink;
 	private Color player2color = Color.blue;
@@ -49,6 +53,8 @@ class MenuDriver extends JFrame implements ActionListener
 	//the panel where all the info is displayed
 	private JPanel hud;
 	//the game over panel
+	private JPanel gumover;
+	
 	private JPanel GameOver;
 
 
@@ -68,6 +74,7 @@ class MenuDriver extends JFrame implements ActionListener
 	cont.setLayout(card);
 	cont.add("menu", initMenu());
 	cont.add("submenu", initSubMenu());
+	//cont.add("gameover", initGameOver());
 	cont.add("game", initGame());
 	
 	add(cont);
@@ -326,10 +333,10 @@ class MenuDriver extends JFrame implements ActionListener
 			sc2.setHorizontalTextPosition(JLabel.CENTER);
 			sc2.setForeground(Color.BLACK);
 			sc2.setFont(new Font("Calibri", Font.BOLD, 27));
-		remaining = new JLabel(" ");
-			remaining.setHorizontalTextPosition(JLabel.CENTER);
-			remaining.setForeground(Color.BLACK);
-			remaining.setFont(new Font("Calibri", Font.BOLD, 27));
+		victorytext = new JLabel(" ");
+			victorytext.setHorizontalTextPosition(JLabel.CENTER);
+			victorytext.setForeground(Color.BLACK);
+			victorytext.setFont(new Font("Calibri", Font.BOLD, 27));
         next = new JButton();
 		    next.setBorder(emptyBorder);
 		    next.setText("Next Game");
@@ -360,7 +367,7 @@ class MenuDriver extends JFrame implements ActionListener
 		hudbuttons.add(pl4);
 		hudbuttons.add(sc2);
 		hudbuttons.add(Box.createRigidArea(new Dimension(0,10)));
-		hudbuttons.add(remaining);
+		hudbuttons.add(victorytext);
 		hudbuttons.add(Box.createRigidArea(new Dimension(0,300)));
 		hudbuttons.add(next);
 		hudbuttons.add(Box.createRigidArea(new Dimension(0,10)));
@@ -371,6 +378,118 @@ class MenuDriver extends JFrame implements ActionListener
         return Game;
 	}
  	
+	public JPanel initGameOver()
+	{
+		JLabel background=new JLabel(new ImageIcon("src\\icons\\test2.png"));
+		ImageIcon button = new ImageIcon("src\\icons\\button.png");
+		ImageIcon pressed = new ImageIcon("src\\icons\\button_press.png");
+		ImageIcon clicked = new ImageIcon("src\\icons\\light_button_press.png");
+		ImageIcon panel = new ImageIcon("src\\icons\\panel.png");
+		
+		GameOver = new JPanel();
+			GameOver.setPreferredSize(new Dimension(psize+200, psize));
+			GameOver.setLayout(new BorderLayout());
+			GameOver.add(background);
+		
+		background.setLayout(new GridBagLayout());
+		JPanel content = new JPanel(); 
+			content.setLayout(new BoxLayout(content, BoxLayout.Y_AXIS));
+			content.setOpaque(true);
+			content.setBackground(new Color(0,0,0,0));
+			
+			JLabel winner = new JLabel();
+				winner.setText(ultiwinner + " wins the tournament!");
+				winner.setHorizontalTextPosition(JLabel.CENTER);
+			  	winner.setForeground(Color.BLACK);
+			    winner.setFont(new Font("Gotham", Font.BOLD, 55));
+			    winner.setAlignmentX(Component.CENTER_ALIGNMENT);
+			
+			JLabel score = new JLabel();
+			 score.setText("SCORE");
+				score.setHorizontalTextPosition(JLabel.CENTER);
+				score.setForeground(Color.BLACK);
+				score.setFont(new Font("Arial", Font.BOLD, 25));
+				score.setAlignmentX(Component.CENTER_ALIGNMENT); 
+				
+			Box scorelist = Box.createHorizontalBox();
+				JLabel score1 = new JLabel(getPl1Score() + " Wins");
+					score1.setHorizontalTextPosition(JLabel.CENTER);
+					score1.setForeground(Color.BLACK);
+					score1.setFont(new Font("Arial", Font.BOLD, 27));
+				JLabel score2 = new JLabel(getPl2Score() + " Wins");
+					score2.setHorizontalTextPosition(JLabel.CENTER);
+					score2.setForeground(Color.BLACK);
+					score2.setFont(new Font("Arial", Font.BOLD, 27));
+				JLabel pl3 = new JLabel("vs");
+					pl3.setHorizontalTextPosition(JLabel.CENTER);
+					pl3.setForeground(Color.BLACK);
+					pl3.setFont(new Font("Arial", Font.BOLD, 20));
+					pl3.setAlignmentX(Component.CENTER_ALIGNMENT);
+			scorelist.add(score1);
+			scorelist.add(Box.createRigidArea(new Dimension(115,0)));
+			scorelist.add(pl3);
+			scorelist.add(Box.createRigidArea(new Dimension(115,0)));
+			scorelist.add(score2);
+			scorelist.setAlignmentX(Component.CENTER_ALIGNMENT);
+			
+			Box labels = Box.createHorizontalBox();
+			  JLabel player1 = new JLabel("Player 1");
+			  	player1.setHorizontalTextPosition(JLabel.CENTER);
+			  	player1.setForeground(Color.WHITE);
+			  	player1.setFont(new Font("Rockwell", Font.PLAIN, 27));
+			  	player1.setIcon(panel);
+			  JLabel player2 = new JLabel("Player 2");
+			  	if(isSingleplayer)
+			  		player2.setText("COMPUTER");
+			  	player2.setHorizontalTextPosition(JLabel.CENTER);
+			  	player2.setForeground(Color.WHITE);
+			  	player2.setFont(new Font("Rockwell", Font.PLAIN, 27));
+			  	player2.setIcon(panel);
+			labels.add(player1);
+			labels.add(Box.createRigidArea(new Dimension(160,0)));
+			labels.add(player2);
+			labels.setAlignmentX(Component.CENTER_ALIGNMENT);
+			
+			Box buttons = Box.createVerticalBox();
+				again = new JButton();
+					Border emptyBorder = BorderFactory.createEmptyBorder();
+					again.setBorder(emptyBorder);
+					again.setText("Play Again!");
+						again.setHorizontalTextPosition(JLabel.CENTER);
+						again.setForeground(Color.WHITE);
+						again.setFont(new Font("Rockwell", Font.PLAIN, 37));
+						again.setIcon(button);
+						again.setRolloverIcon(pressed);
+						again.setPressedIcon(clicked);
+						again.addActionListener(this);	
+				bigquit = new JButton("Multiplayer");
+					bigquit.setBorder(emptyBorder);
+					bigquit.setText("Exit Game");
+						bigquit.setHorizontalTextPosition(JLabel.CENTER);
+						bigquit.setForeground(Color.WHITE);
+						bigquit.setFont(new Font("Rockwell", Font.PLAIN, 37));
+						bigquit.setIcon(button);
+						bigquit.setRolloverIcon(pressed);
+						bigquit.setPressedIcon(clicked);
+						bigquit.addActionListener(this);
+			buttons.add(again);
+			buttons.add(Box.createRigidArea(new Dimension(0,40)));
+			buttons.add(bigquit);
+			buttons.setAlignmentX(Component.CENTER_ALIGNMENT);
+		content.add(winner);
+		content.add(Box.createRigidArea(new Dimension(0,110)));
+		content.add(score);
+		//content.add(Box.createRigidArea(new Dimension(0,10)));
+		content.add(labels);
+		content.add(scorelist);
+		content.add(Box.createRigidArea(new Dimension(0,125)));
+		content.add(buttons);
+
+		background.add(content);
+		GameOver.setVisible(true);
+		return GameOver;
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent e) 
 	{
@@ -416,13 +535,42 @@ class MenuDriver extends JFrame implements ActionListener
         }
         if(j.equals(next))
         {
-            game.boardReset();
-            canvas.resetBoard();
-            int[] focus = game.getData();
-            
+            if(gameoverMode)
+            {
+            	game.boardReset();
+            	card.show(cont, "gameover");
+                canvas.resetBoard();       
+            }
+            else
+            {
+                game.boardReset();
+           	    canvas.resetBoard(); 	
+            }
+
+        }
+        if(j.equals(again))
+        {
+        	
+        }
+        if(j.equals(bigquit))
+        {
+        	
         }
 	}
 
+    public int getPl1Score()
+    {
+    	return game.getData()[0];
+    }
+    public int getPl2Score()
+    {
+    	return game.getData()[1];
+    }
+    public int getGamesRemaining()
+    {
+    	return game.getData()[2];
+    }
+    
 	
 	/*This is a custom JPanel that will server as our canvas. All polygons will be drawn on this canvas.
 	 * 
@@ -604,7 +752,7 @@ class MenuDriver extends JFrame implements ActionListener
         	int repeatTimes = 10;
         	int delay = 75;
         	
-        	remaining.setText(game.getWinner() + " wins!");
+        	victorytext.setText(game.getWinner() + " wins!");
         	next.setEnabled(true);
         	winMode = true;
         	displayWinMode = true;
@@ -627,9 +775,29 @@ class MenuDriver extends JFrame implements ActionListener
         	timercasovac.start();
         }
         
+        public void endGame()
+        {
+        	gameoverMode = true;
+        	cont.add("gameover", initGameOver());
+        	next.setText("Finish Game");  
+        	String winner = null;
+        	if(getPl1Score()==getPl2Score())
+        		winner = "Nobody";
+        	if(getPl1Score()<getPl2Score())
+        		winner = "Player 2";
+        	if(getPl1Score()>getPl2Score())
+        		winner = "Player 1";
+        	ultiwinner = winner;
+        	
+        }
         public void checkWin()
         {
-            if(game.gameWin())
+            if(getGamesRemaining() <= 0)
+            {
+            	endGame();
+            	displayWin();
+            }
+        	if(game.gameWin())
             {
             	System.out.println(game.getWinner());
             	displayWin();
@@ -646,6 +814,7 @@ class MenuDriver extends JFrame implements ActionListener
         	sc1.setText(score1);
         	sc2.setText(score2);
         }
+        
         
         public void setDWinMode(boolean b)
         {
@@ -725,7 +894,7 @@ class MenuDriver extends JFrame implements ActionListener
         public void resetBoard()
         {
 	    	//reset winner notification
-        	remaining.setText(" ");
+        	victorytext.setText(" ");
         	next.setEnabled(false);
         	//turn win mode off
 	    	winMode = false;
